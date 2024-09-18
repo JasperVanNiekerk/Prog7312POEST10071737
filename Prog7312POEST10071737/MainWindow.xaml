@@ -1,0 +1,261 @@
+﻿<Window
+    x:Class="Prog7312POEST10071737.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Views="clr-namespace:Prog7312POEST10071737.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Prog7312POEST10071737"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    Title=""
+    MinWidth="830"
+    MinHeight="500"
+    ui:WindowHelper.UseModernWindowStyle="True"
+    AllowsTransparency="True"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Grid>
+        <!--  Image for Night  -->
+        <Image
+            x:Name="NightImage"
+            Opacity="0"
+            Source="BackGroundPhotos/time_night.png"
+            Stretch="Fill" />
+        <!--  Image for Dusk  -->
+        <Image
+            x:Name="DuskImage"
+            Opacity="0"
+            Source="BackGroundPhotos/time_sunset.png"
+            Stretch="Fill" />
+        <!--  Image for Day  -->
+        <Image
+            x:Name="DayImage"
+            Opacity="1"
+            Source="BackGroundPhotos/time_day.png"
+            Stretch="Fill" />
+
+        <Grid
+            x:Name="GridMain"
+            IsHitTestVisible="True"
+            Opacity="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="75" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+                <Button
+                    x:Name="ReportIssuesBTN"
+                    Height="50"
+                    Margin="0,0,0,10"
+                    Background="White"
+                    Click="Control1RadioButton_Checked"
+                    Content="Report Issues"
+                    FontWeight="ExtraBold"
+                    Style="{StaticResource MainButton}" />
+
+                <Button
+                    x:Name="LocalEventsAndAnnouncementsBTN"
+                    Height="50"
+                    Margin="0,0,0,10"
+                    Background="White"
+                    Click="Control2RadioButton_Checked"
+                    Content="Local Events and Announcements"
+                    FontWeight="ExtraBold"
+                    IsEnabled="False"
+                    Style="{StaticResource MainButton}"
+                    ToolTip="This feature is not available yet"
+                    ToolTipService.ShowOnDisabled="True" />
+
+                <Button
+                    x:Name="ServiceRequestStatusBTN"
+                    Height="50"
+                    Margin="0,0,0,10"
+                    Background="White"
+                    Click="Control3RadioButton_Checked"
+                    Content="Service Request Status"
+                    FontWeight="ExtraBold"
+                    IsEnabled="False"
+                    Style="{StaticResource MainButton}"
+                    ToolTip="This feature is not available yet"
+                    ToolTipService.ShowOnDisabled="True" />
+
+                <Button
+                    x:Name="exitBTN"
+                    Height="50"
+                    Margin="0,0,0,10"
+                    Background="White"
+                    Click="Control3RadioButton_Checked"
+                    Content="Service Request Status"
+                    FontWeight="ExtraBold"
+                    IsEnabled="False"
+                    Style="{StaticResource MainButton}"
+                    ToolTip="This feature is not available yet"
+                    ToolTipService.ShowOnDisabled="True" />
+            </StackPanel>
+
+            <StackPanel
+                Grid.Column="3"
+                VerticalAlignment="Top"
+                Orientation="Vertical">
+
+                <!-- <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Becris - Flaticon</a>-->
+                <Button
+                    Width="75"
+                    Height="75"
+                    Background="Transparent"
+                    IsEnabled="False"
+                    ToolTip="User Login not suported yet"
+                    ToolTipService.ShowOnDisabled="True">
+                    <Image Opacity="0.75" Source="Icons/user.png" />
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border
+                                x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="40">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="lightGray" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+
+            </StackPanel>
+        </Grid>
+
+        <Grid
+            x:Name="GridActivity"
+            IsHitTestVisible="True"
+            Opacity="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+
+
+            <Rectangle
+                Grid.Column="1"
+                Width="250"
+                Fill="White"
+                Opacity="0.5"
+                RadiusX="25"
+                RadiusY="25" />
+
+            <StackPanel
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+
+                <Border Height="20" />
+
+                <!-- <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Becris - Flaticon</a>-->
+                <Button
+                    Width="150"
+                    Height="150"
+                    HorizontalAlignment="Center"
+                    BorderThickness="2"
+                    IsEnabled="False"
+                    ToolTip="This feature is not available yet"
+                    ToolTipService.ShowOnDisabled="True">
+                    <Image
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Opacity="0.75"
+                        Source="Icons/user.png" />
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border
+                                x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="75">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="lightGray" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Border Height="75" />
+
+                <ui:RadioButtons>
+                    <RadioButton
+                        x:Name="RB1"
+                        Width="200"
+                        Margin="0,10"
+                        Checked="Control1RadioButton_Checked"
+                        Content="Report Issues"
+                        Style="{StaticResource MenuButtonStyle}" />
+                    <RadioButton
+                        x:Name="RB2"
+                        Width="200"
+                        Checked="Control1RadioButton_Checked"
+                        Content="Events &amp; Announcements"
+                        IsEnabled="False"
+                        Style="{StaticResource MenuButtonStyle}"
+                        ToolTip="This feature is not available yet"
+                        ToolTipService.ShowOnDisabled="True" />
+
+                    <RadioButton
+                        x:Name="RB3"
+                        Width="200"
+                        Checked="Control1RadioButton_Checked"
+                        Content="Service Request Status"
+                        IsEnabled="False"
+                        Style="{StaticResource MenuButtonStyle}"
+                        ToolTip="This feature is not available yet"
+                        ToolTipService.ShowOnDisabled="True" />
+                </ui:RadioButtons>
+
+                <Button
+                    Height="50"
+                    Margin="10"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Bottom"
+                    Background="White"
+                    Click="FeedbackButtonClicked"
+                    Content="Feedback"
+                    FontWeight="DemiBold"
+                    Style="{StaticResource MainButton}" />
+                <Button
+                    Height="50"
+                    Margin="10"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Bottom"
+                    Background="White"
+                    Click="Button_Click"
+                    Content="Back to Main menu"
+                    FontWeight="DemiBold"
+                    Style="{StaticResource MainButton}" />
+
+
+
+            </StackPanel>
+
+            <ContentControl
+                x:Name="ContentControl"
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch" />
+
+        </Grid>
+    </Grid>
+</Window>
