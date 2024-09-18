@@ -90,7 +90,7 @@
                     Height="50"
                     Margin="0,0,0,10"
                     Background="White"
-                    Click="Control3RadioButton_Checked"
+                    Click="exitBTN_Click"
                     Content="Service Request Status"
                     FontWeight="ExtraBold"
                     IsEnabled="False"

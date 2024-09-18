@@ -137,6 +137,11 @@ namespace Prog7312POEST10071737
             GridActivity.Opacity = 0;
             GridActivity.IsHitTestVisible = false;
         }
+
+        private void exitBTN_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
 //i love you!
