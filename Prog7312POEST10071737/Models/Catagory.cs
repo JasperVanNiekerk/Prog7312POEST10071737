@@ -1,21 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Prog7312POEST10071737.Models
 {
     internal class Category
     {
+        /// <summary>
+        /// defines the category of the issue
+        /// </summary>
         private int CategoryId;
         private string CategoryName;
+        //___________________________________________________________________________________________________________
 
-        
+        /// <summary>
+        /// constructor for the category
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
         public Category(int id, string name)
         {
             CategoryId = id;
             CategoryName = name;
         }
+        //___________________________________________________________________________________________________________
 
-        
+        /// <summary>
+        /// returns list of all the categories
+        /// </summary>
+        /// <returns></returns>
         public static List<Category> GetAllCategories()
         {
             return new List<Category>
@@ -32,9 +43,17 @@ namespace Prog7312POEST10071737.Models
                 new Category(10, "General Inquiries")
             };
         }
+        //___________________________________________________________________________________________________________
+
+        /// <summary>
+        /// returns the category name
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return CategoryName;
         }
+        //___________________________________________________________________________________________________________
     }
 }
+//____________________________________EOF_________________________________________________________________________

@@ -1,22 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using EASendMail;
+﻿using EASendMail;
+using System;
 
 namespace Prog7312POEST10071737.Services
 {
     public class MyEmailService
     {
 
-
+        /// <summary>
+        /// declare variables
+        /// </summary>
         private string senderEmail = Properties.Resources.SenderEmail;
         private string receiverEmail;
         private string senderPassword = Properties.Resources.SenderPassword;
+        //___________________________________________________________________________________________________________
 
-
+        /// <summary>
+        /// method to send email
+        /// </summary>
+        /// <param name="subject"></param>
+        /// <param name="Body"></param>
         public void EmailSender(string subject, string Body)
         {
             var SingletonService = UserSingleton.Instance;
@@ -56,14 +58,15 @@ namespace Prog7312POEST10071737.Services
                 SmtpClient oSmtp = new SmtpClient();
                 oSmtp.SendMail(oServer, oMail);
 
-                
+
             }
             catch (Exception ep)
             {
-                
+
             }
         }
 
-
+        //___________________________________________________________________________________________________________
     }
 }
+//____________________________________EOF_________________________________________________________________________

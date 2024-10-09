@@ -1,10 +1,7 @@
-﻿using System;
+﻿using Prog7312POEST10071737.Models;
 using System.Collections.ObjectModel;
-using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using Prog7312POEST10071737.Models;
 
 namespace Prog7312POEST10071737.Views
 {
@@ -13,8 +10,15 @@ namespace Prog7312POEST10071737.Views
     /// </summary>
     public partial class ReportViewsView : UserControl
     {
-
+        /// <summary>
+        /// declaration of the IssueReports ObservableCollection
+        /// </summary>
         public ObservableCollection<IssueReport> IssueReports;
+        //___________________________________________________________________________________________________________
+
+        /// <summary>
+        /// Constructor for the ReportViewsView
+        /// </summary>
         public ReportViewsView()
         {
             InitializeComponent();
@@ -30,10 +34,16 @@ namespace Prog7312POEST10071737.Views
                 System.Diagnostics.Debug.WriteLine($"Report: {report.Location} - {report.Description}");
             }
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// method to handle the click event of the ReportButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MakeReportButtonClicked(object sender, RoutedEventArgs e)
         {
-            
+
             if (ContentControlReport.Content == null)
             {
                 ContentControlReport.Content = new ReportFormView();
@@ -49,6 +59,7 @@ namespace Prog7312POEST10071737.Views
                 ReportButtonTB.Text = "See an Issue Report it";
             }
         }
+        //___________________________________________________________________________________________________________
     }
 }
-
+//____________________________________EOF_________________________________________________________________________

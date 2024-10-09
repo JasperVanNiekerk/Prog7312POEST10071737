@@ -13,13 +13,19 @@ namespace Prog7312POEST10071737
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        /// <summary>
+        /// constructor for the main window
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
             UpdateBackground();
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// method to update the background based on the current time of day
+        /// </summary>
         private void UpdateBackground()
         {
             var currentTime = DateTime.Now.TimeOfDay;
@@ -92,7 +98,13 @@ namespace Prog7312POEST10071737
 
             storyboard.Begin();
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// method to handle the click event for the first control radio button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Control1RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             ContentControl.Content = new ReportViewsView();
@@ -102,6 +114,13 @@ namespace Prog7312POEST10071737
             GridActivity.IsHitTestVisible = true;
             RB1.IsChecked = true;
         }
+        //___________________________________________________________________________________________________________
+
+        /// <summary>
+        /// method to handle the click event for the second control radio button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Control2RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             ContentControl.Content = null;
@@ -111,7 +130,13 @@ namespace Prog7312POEST10071737
             GridActivity.IsHitTestVisible = true;
             RB2.IsChecked = true;
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// method to handle the click event for the third control radio button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Control3RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             ContentControl.Content = null;
@@ -121,14 +146,25 @@ namespace Prog7312POEST10071737
             GridActivity.IsHitTestVisible = true;
             RB3.IsChecked = true;
         }
+        //___________________________________________________________________________________________________________
 
-
+        /// <summary>
+        /// method to open the feedback form in the default browser
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FeedbackButtonClicked(object sender, RoutedEventArgs e)
         {
             string url = "https://docs.google.com/forms/d/e/1FAIpQLSeVlfuNeJuATkLLp7Uocl7shU4O2-Xb4yt2SLxTnoT4HNDg2A/viewform?usp=sf_link";
             Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// method to handle the click event for the back button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             ContentControl.Content = null;
@@ -137,12 +173,20 @@ namespace Prog7312POEST10071737
             GridActivity.Opacity = 0;
             GridActivity.IsHitTestVisible = false;
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// method to handle the click event for the exit button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void exitBTN_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
+        //___________________________________________________________________________________________________________
     }
 }
 //i love you!
 //i love you too!
+//____________________________________EOF_________________________________________________________________________

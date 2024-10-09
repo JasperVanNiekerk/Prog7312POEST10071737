@@ -8,26 +8,35 @@ using System.Windows.Media.Imaging;
 
 namespace Prog7312POEST10071737.Components
 {
+    /// <summary>
+    /// Represents a user control for displaying a report.
+    /// </summary>
     public partial class ReportDisplayComponent : UserControl
     {
         public static readonly DependencyProperty IssueReportProperty =
             DependencyProperty.Register("IssueReport", typeof(IssueReport), typeof(ReportDisplayComponent),
                 new PropertyMetadata(null, OnIssueReportChanged));
 
+        /// <summary>
+        /// Gets or sets the issue report to be displayed.
+        /// </summary>
         public IssueReport IssueReport
         {
             get { return (IssueReport)GetValue(IssueReportProperty); }
             set { SetValue(IssueReportProperty, value); }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReportDisplayComponent"/> class.
+        /// </summary>
         public ReportDisplayComponent()
         {
             InitializeComponent();
-            if(IssueReport != null)
+            if (IssueReport != null)
             {
                 ReportImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(GetFirstImagePath())));
             }
-            
+
         }
 
         private static void OnIssueReportChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
