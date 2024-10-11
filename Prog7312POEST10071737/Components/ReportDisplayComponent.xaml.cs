@@ -1,6 +1,6 @@
 ﻿using Prog7312POEST10071737.Models;
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -9,13 +9,13 @@ using System.Windows.Media.Imaging;
 namespace Prog7312POEST10071737.Components
 {
     /// <summary>
-    /// Represents a user control for displaying a report.
+    /// Interaction logic for ReportDisplayComponent.xaml
     /// </summary>
     public partial class ReportDisplayComponent : UserControl
     {
         public static readonly DependencyProperty IssueReportProperty =
-            DependencyProperty.Register("IssueReport", typeof(IssueReport), typeof(ReportDisplayComponent),
-                new PropertyMetadata(null, OnIssueReportChanged));
+              DependencyProperty.Register("IssueReport", typeof(IssueReport), typeof(ReportDisplayComponent),
+                  new PropertyMetadata(null, OnIssueReportChanged));
 
         /// <summary>
         /// Gets or sets the issue report to be displayed.
@@ -34,7 +34,7 @@ namespace Prog7312POEST10071737.Components
             InitializeComponent();
             if (IssueReport != null)
             {
-                ReportImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(GetFirstImagePath())));
+                ReportImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(GetFirstImagePath().ToString())));
             }
 
         }
@@ -47,48 +47,55 @@ namespace Prog7312POEST10071737.Components
                 control.SetReportImage(); // Update the image when IssueReport changes
             }
         }
-
         private void SetReportImage()
         {
             if (IssueReport != null)
             {
-                string imagePath = GetFirstImagePath();
-                if (!string.IsNullOrEmpty(imagePath))
+                BitmapImage bitmap = GetFirstImagePath();
+                if (bitmap != null)
                 {
-                    // Create an ImageBrush
-                    ImageBrush imageBrush = new ImageBrush();
-
-                    // Set the image source
-                    BitmapImage bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(GetFirstImagePath(), UriKind.Absolute);
-                    bitmap.EndInit();
-
-                    imageBrush.ImageSource = bitmap;
-
-                    ReportImage.Background = imageBrush;
+                    // Set the image source for the Image control
+                    ReportImage.Background = new ImageBrush(bitmap);
                 }
                 else
                 {
-                    ReportImage.Background = null; ; // Set to null if no image is found
+                    ReportImage.Background = null; // Clear image if no valid image data is found
                 }
             }
         }
-
-        private string GetFirstImagePath()
+        private BitmapImage GetFirstImagePath()
         {
-            var imageExtensions = new List<string> { ".png", ".jpeg", ".jpg" };
-            var MediaPaths = IssueReport.MediaPaths;
-            foreach (var path in MediaPaths)
+            var Media = IssueReport.MediaPaths;
+            if (Media.Count > 0)
             {
-                string extension = System.IO.Path.GetExtension(path).ToLower();
-                if (imageExtensions.Contains(extension))
+                var count = 0;
+                bool imageLoaded = false;
+                while (Media.Count > count && !imageLoaded)
                 {
-                    return path;
+                    byte[] firstMediaArray = Media[count];
+                    using (var ms = new MemoryStream(firstMediaArray))
+                    {
+                        try
+                        {
+                            BitmapImage bitmap = new BitmapImage();
+                            bitmap.BeginInit();
+                            bitmap.StreamSource = ms;
+                            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                            bitmap.EndInit();
+                            // Force free resources after loading the image
+                            bitmap.Freeze();
+                            imageLoaded = true; // Image successfully loaded, exit loop
+                            return bitmap;
+                        }
+                        catch (NotSupportedException)
+                        {
+                            count++;
+                        }
+                    }
                 }
             }
-
-            return null; // Return null if no image is found
+            return null; // Return null if no valid image data is found
         }
+
     }
 }

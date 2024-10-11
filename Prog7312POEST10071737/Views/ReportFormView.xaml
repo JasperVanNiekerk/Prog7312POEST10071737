@@ -30,7 +30,7 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="0.25*" />
+                <ColumnDefinition Width="0.3*" />
                 <ColumnDefinition Width="0.75*" />
             </Grid.ColumnDefinitions>
 
@@ -48,8 +48,7 @@
                 BorderBrush="Black"
                 BorderThickness="1"
                 Foreground="Black"
-                MaxLength="30"
-                Opacity="0.5" />
+                MaxLength="30" />
 
             <!--  Category Dropdown  -->
             <ComboBox
@@ -66,14 +65,14 @@
                 Background="LightGray"
                 BorderBrush="Black"
                 BorderThickness="1"
-                Foreground="Black"
-                Opacity="0.5" />
+                Foreground="Black" />
 
             <!--  Description  -->
-            <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid Grid.Row="1" Grid.ColumnSpan="1">
                 <TextBox
                     x:Name="PlaceholderTB"
                     Margin="10,10,200,10"
+                    Panel.ZIndex="1"
                     Background="Transparent"
                     BorderBrush="Transparent"
                     Foreground="Black"
@@ -82,31 +81,64 @@
                 <RichTextBox
                     x:Name="DescriptionTB"
                     Grid.Row="1"
-                    Grid.ColumnSpan="2"
+                    Grid.ColumnSpan="1"
                     Margin="10,10,10,10"
                     Background="LightGray"
                     BorderBrush="Black"
                     BorderThickness="1"
                     Foreground="Black"
-                    Opacity="0.5"
                     SpellCheck.IsEnabled="True"
                     TextChanged="DescriptionTB_TextChanged" />
             </Grid>
 
+
+            <Border
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0,10,0,10"
+                Background="LightGray"
+                BorderBrush="Black"
+                BorderThickness="1"
+                CornerRadius="1">
+                <ScrollViewer>
+                    <TextBlock
+                        x:Name="MediaList"
+                        HorizontalAlignment="Center"
+                        FontSize="12"
+                        Foreground="Black"
+                        IsHitTestVisible="False"
+                        Text="Media"
+                        TextWrapping="Wrap" />
+                </ScrollViewer>
+            </Border>
+
             <!--  Image Upload Button  -->
-            <StackPanel
+            <Grid
                 Grid.Row="1"
                 Grid.Column="2"
-                Margin="10"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Bottom">
-                <Image
-                    x:Name="ImageDisplayIMG"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Stretch="Fill" />
+                Margin="10">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Border
+                    Background="LightGray"
+                    BorderBrush="black"
+                    BorderThickness="1"
+                    CornerRadius="1">
+                    <Image
+                        x:Name="ImageDisplayIMG"
+                        Grid.Row="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Stretch="Fill" />
+                </Border>
+
                 <Button
                     x:Name="MediaUploadBTN"
+                    Grid.Row="1"
                     Height="30"
                     Margin="0,10,0,0"
                     HorizontalAlignment="Stretch"
@@ -114,10 +146,10 @@
                     BorderBrush="Black"
                     BorderThickness="1"
                     Click="AddMediaButtonClicked"
-                    Content="Upload Photo"
-                    Foreground="Black"
-                    Opacity="0.5" />
-            </StackPanel>
+                    Content="Upload Media"
+                    Foreground="Black" />
+
+            </Grid>
 
             <!--  Subscriber Section  -->
             <Button
@@ -132,7 +164,6 @@
                 BorderThickness="1"
                 Foreground="Black"
                 IsEnabled="True"
-                Opacity="0.5"
                 ToolTipService.ShowOnDisabled="True">
 
                 <CheckBox
@@ -161,7 +192,6 @@
                 BorderThickness="1"
                 Foreground="Black"
                 IsEnabled="True"
-                Opacity="0.5"
                 ToolTipService.ShowOnDisabled="True">
 
                 <CheckBox
@@ -189,8 +219,7 @@
                 BorderThickness="1"
                 Click="SubmitButtonClicked"
                 Content="Submit"
-                Foreground="Black"
-                Opacity="0.5" />
+                Foreground="Black" />
         </Grid>
 
     </Grid>

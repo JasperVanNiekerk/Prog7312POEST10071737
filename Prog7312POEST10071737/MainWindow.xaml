@@ -57,7 +57,8 @@
                     Click="Control1RadioButton_Checked"
                     Content="Report Issues"
                     FontWeight="ExtraBold"
-                    Style="{StaticResource MainButton}" />
+                    Style="{StaticResource MainButton}"
+                    ToolTip="view reported issues" />
 
                 <Button
                     x:Name="LocalEventsAndAnnouncementsBTN"
@@ -67,10 +68,7 @@
                     Click="Control2RadioButton_Checked"
                     Content="Local Events and Announcements"
                     FontWeight="ExtraBold"
-                    IsEnabled="False"
-                    Style="{StaticResource MainButton}"
-                    ToolTip="This feature is not available yet"
-                    ToolTipService.ShowOnDisabled="True" />
+                    Style="{StaticResource MainButton}" />
 
                 <Button
                     x:Name="ServiceRequestStatusBTN"
@@ -91,11 +89,10 @@
                     Margin="0,0,0,10"
                     Background="White"
                     Click="exitBTN_Click"
-                    Content="Service Request Status"
+                    Content="Exit"
                     FontWeight="ExtraBold"
-                    IsEnabled="False"
                     Style="{StaticResource MainButton}"
-                    ToolTip="This feature is not available yet"
+                    ToolTip="Exit the application"
                     ToolTipService.ShowOnDisabled="True" />
             </StackPanel>
 
@@ -207,12 +204,9 @@
                     <RadioButton
                         x:Name="RB2"
                         Width="200"
-                        Checked="Control1RadioButton_Checked"
+                        Checked="Control2RadioButton_Checked"
                         Content="Events &amp; Announcements"
-                        IsEnabled="False"
-                        Style="{StaticResource MenuButtonStyle}"
-                        ToolTip="This feature is not available yet"
-                        ToolTipService.ShowOnDisabled="True" />
+                        Style="{StaticResource MenuButtonStyle}" />
 
                     <RadioButton
                         x:Name="RB3"

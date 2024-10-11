@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -30,7 +31,7 @@ namespace Prog7312POEST10071737.Models
         private Guid _id;
         private string _description;
         private string _location;
-        private List<string> _mediaPaths;
+        private List<byte[]> _mediaPaths;
         private ReportStatus _status;
         private string _category;
         private List<Guid> _subscribedUsers;
@@ -69,7 +70,7 @@ namespace Prog7312POEST10071737.Models
         /// <summary>
         /// Gets or sets the media paths associated with the issue report.
         /// </summary>
-        public List<string> MediaPaths
+        public List<byte[]> MediaPaths
         {
             get => _mediaPaths;
             set => SetField(ref _mediaPaths, value);
@@ -113,7 +114,7 @@ namespace Prog7312POEST10071737.Models
         /// <param name="location"></param>
         /// <param name="mediaPaths"></param>
         /// <param name="categoryID"></param>
-        public IssueReport(string description, string location, List<string> mediaPaths, string categoryID)
+        public IssueReport(string description, string location, List<byte[]> mediaPaths, string categoryID)
         {
             Id = Guid.NewGuid();
             Description = description;
@@ -133,7 +134,7 @@ namespace Prog7312POEST10071737.Models
         /// <param name="mediaPaths"></param>
         /// <param name="categoryID"></param>
         /// <param name="user"></param>
-        public IssueReport(string description, string location, List<string> mediaPaths, string categoryID, Guid user)
+        public IssueReport(string description, string location, List<byte[]> mediaPaths, string categoryID, Guid user)
             : this(description, location, mediaPaths, categoryID)
         {
             SubscribedUsers.Add(user);

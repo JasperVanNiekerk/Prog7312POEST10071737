@@ -1,5 +1,6 @@
 ﻿using Prog7312POEST10071737.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -105,7 +106,7 @@ namespace Prog7312POEST10071737.Services
         /// <param name="location"></param>
         /// <param name="MediaPath"></param>
         /// <param name="category"></param>
-        public void AddIssueReport(string description, string location, List<string> MediaPath, string category)
+        public void AddIssueReport(string description, string location, List<byte[]> MediaPath, string category)
         {
             IssueReports.Add(new IssueReport(description, location, MediaPath, category));
         }
@@ -119,7 +120,7 @@ namespace Prog7312POEST10071737.Services
         /// <param name="MediaPath"></param>
         /// <param name="category"></param>
         /// <param name="user"></param>
-        public void AddIssueReport(string description, string location, List<string> MediaPath, string category, Guid user)
+        public void AddIssueReport(string description, string location, List<byte[]> MediaPath, string category, Guid user)
         {
             IssueReports.Add(new IssueReport(description, location, MediaPath, category, user));
         }

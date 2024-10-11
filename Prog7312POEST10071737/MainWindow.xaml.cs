@@ -123,7 +123,7 @@ namespace Prog7312POEST10071737
         /// <param name="e"></param>
         private void Control2RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            ContentControl.Content = null;
+            ContentControl.Content = new LocalEventsView();
             GridMain.Opacity = 0;
             GridMain.IsHitTestVisible = false;
             GridActivity.Opacity = 1;

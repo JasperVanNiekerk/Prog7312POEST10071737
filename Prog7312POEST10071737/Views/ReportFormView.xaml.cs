@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -15,11 +16,12 @@ namespace Prog7312POEST10071737.Views
         /// <summary>
         /// declare variables
         /// </summary>
-        private List<string> MediaPaths = new List<string>();
+        private List<byte[]> Media = new List<byte[]>();
+        private List<string> MediaNames = new List<string>();
         private string location;
         private string category;
         private string description;
-        private string FirstPhotoPath;
+        private string FirstMedia;
         private bool userPresent = false;
         //___________________________________________________________________________________________________________
 
@@ -64,7 +66,7 @@ namespace Prog7312POEST10071737.Views
             {
                 location = LocationTB.Text;
                 category = CatagoryCB.Text;
-                var media = MediaPaths;
+                var media = Media;
 
                 var SingletonService = Services.UserSingleton.Instance;
 
@@ -104,32 +106,36 @@ namespace Prog7312POEST10071737.Views
 
             foreach (var file in dialog.FileNames)
             {
-                MediaPaths.Add(file);
+                MediaNames.Add(GetFileName(file));
+                Media.Add(FileToBitArray(file));
             }
 
-            GetFirstImagePath();
             UpdateFirstImage();
+            UpdateMediaList();
         }
         //___________________________________________________________________________________________________________
 
         /// <summary>
-        /// method to get the first image path in the media paths list
+        /// method to convert file path to byte array
         /// </summary>
+        /// <param name="filePath"></param>
         /// <returns></returns>
-        private string GetFirstImagePath()
+        public static byte[] FileToBitArray(string filePath)
         {
-            var imageExtensions = new List<string> { ".png", ".jpeg", ".jpg" };
+            // Read all bytes from the file
+            byte[] fileBytes = File.ReadAllBytes(filePath);
+            return fileBytes;
+        }
+        //___________________________________________________________________________________________________________
 
-            foreach (var path in MediaPaths)
-            {
-                string extension = System.IO.Path.GetExtension(path).ToLower();
-                if (imageExtensions.Contains(extension))
-                {
-                    return path;
-                }
-            }
-
-            return null; // Return null if no image is found
+        /// <summary>
+        /// method to get the file name from the file path
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public static string GetFileName(string filePath)
+        {
+            return Path.GetFileName(filePath);
         }
         //___________________________________________________________________________________________________________
 
@@ -138,10 +144,44 @@ namespace Prog7312POEST10071737.Views
         /// </summary>
         private void UpdateFirstImage()
         {
-            FirstPhotoPath = GetFirstImagePath();
-            if (FirstPhotoPath != null)
+            if (Media.Count > 0)
             {
-                ImageDisplayIMG.Source = new BitmapImage(new Uri(FirstPhotoPath));
+                var count = 0;
+                bool imageLoaded = false;
+
+                while (Media.Count > count && !imageLoaded)
+                {
+                    byte[] firstMediaArray = Media[count];
+
+                    using (var ms = new MemoryStream(firstMediaArray))
+                    {
+                        try
+                        {
+                            BitmapImage bitmap = new BitmapImage();
+                            bitmap.BeginInit();
+                            bitmap.StreamSource = ms;
+                            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                            bitmap.EndInit();
+
+                            // Force free resources after loading the image
+                            bitmap.Freeze();
+
+                            ImageDisplayIMG.Source = bitmap;
+                            imageLoaded = true; // Image successfully loaded, exit loop
+                        }
+                        catch (NotSupportedException)
+                        {
+                            count++;
+                            ImageDisplayIMG.Source = null;
+                        }
+                    }
+                }
+
+                // No valid image found
+                if (!imageLoaded)
+                {
+                    ImageDisplayIMG.Source = null;
+                }
             }
             else
             {
@@ -150,6 +190,24 @@ namespace Prog7312POEST10071737.Views
         }
         //___________________________________________________________________________________________________________
 
+
+        private void UpdateMediaList()
+        {
+            var mediaList = "";
+            if (Media.Count > 0)
+            {
+                foreach (var media in MediaNames)
+                {
+                    mediaList += media + "\n";
+                }
+                MediaList.FontSize = 8;
+            }
+            else
+            {
+                mediaList = "No media added";
+            }
+            MediaList.Text = mediaList;
+        }
 
         /// <summary>
         /// method to send a report confirmation email

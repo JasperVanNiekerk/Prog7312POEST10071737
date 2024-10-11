@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using Prog7312POEST10071737.Components;
 
 namespace Prog7312POEST10071737.Views
 {
@@ -27,12 +28,6 @@ namespace Prog7312POEST10071737.Views
             // Directly use the IssueReports ObservableCollection
             IssueReports = singletonService.IssueReports;
             ReportItemsControl.ItemsSource = IssueReports;
-
-            // For debugging
-            foreach (var report in singletonService.IssueReports)
-            {
-                System.Diagnostics.Debug.WriteLine($"Report: {report.Location} - {report.Description}");
-            }
         }
         //___________________________________________________________________________________________________________
 
