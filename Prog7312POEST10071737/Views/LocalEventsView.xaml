@@ -30,12 +30,28 @@
             CornerRadius="10"
             Opacity="0.5" />
 
+        <!--  Rolling Banner  -->
         <Border
+            Grid.Row="0"
             Grid.ColumnSpan="2"
             Margin="5"
             Background="LightGray"
+            ClipToBounds="True"
             CornerRadius="10"
-            Opacity="0.5" />
+            Opacity="0.5">
+
+            <Button
+                x:Name="BannerButton"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="Transparent"
+                BorderThickness="0"
+                Click="BannerButton_Click"
+                FontSize="25"
+                FontWeight="Bold"
+                Foreground="Black" />
+
+        </Border>
 
         <Border
             Grid.Row="1"
@@ -44,6 +60,17 @@
             Background="LightGray"
             CornerRadius="10"
             Opacity="0.5" />
+
+        <TextBlock
+            x:Name="TestTB"
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="10"
+            FontWeight="Bold"
+            Foreground="Black"
+            Text="Local Events"
+            TextAlignment="Center"
+            TextWrapping="Wrap" />
 
 
 

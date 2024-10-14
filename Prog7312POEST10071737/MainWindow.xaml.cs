@@ -1,6 +1,9 @@
-﻿using Prog7312POEST10071737.Views;
+﻿using Prog7312POEST10071737.Models;
+using Prog7312POEST10071737.Services;
+using Prog7312POEST10071737.Views;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
