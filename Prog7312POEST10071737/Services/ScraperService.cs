@@ -12,8 +12,12 @@ namespace Prog7312POEST10071737.Services
     public class ScraperService
     {
 
-        private readonly string url = "https://www.sa-venues.com/events/westerncape/"; // The website's event page
+        private HashSet<string> scrapedTitles = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
+        /// <summary>
+        /// Scrapes the event links from the specified URLs.
+        /// </summary>
+        /// <returns>A list of event links.</returns>
         private async Task<List<string>> ScrapeEventLinksAsync()
         {
             var urls = new List<string>
@@ -52,9 +56,13 @@ namespace Prog7312POEST10071737.Services
 
             return eventLinks;
         }
+//___________________________________________________________________________________________________________
 
-
-
+        /// <summary>
+        /// Scrapes the event details from the specified event URL.
+        /// </summary>
+        /// <param name="eventUrl">The URL of the event.</param>
+        /// <returns>The scraped event details.</returns>
         private async Task<OurEvents> ScrapeEventDetailsAsync(string eventUrl)
         {
             using (HttpClient client = new HttpClient())
@@ -134,7 +142,13 @@ namespace Prog7312POEST10071737.Services
                 return new OurEvents(title, description, date, venue, phone, images, categories);
             }
         }
+//___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Scrapes the events asynchronously and invokes the specified action for each scraped event.
+        /// </summary>
+        /// <param name="onEventScraped">The action to invoke for each scraped event.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task ScrapeEventsAsync(Action<OurEvents> onEventScraped)
         {
             var eventLinks = await ScrapeEventLinksAsync();
@@ -142,8 +156,18 @@ namespace Prog7312POEST10071737.Services
             foreach (var link in eventLinks)
             {
                 var eventDetails = await ScrapeEventDetailsAsync(link);
-                onEventScraped?.Invoke(eventDetails);  // Notify that an event was scraped
+
+                // Check if the event title is unique before adding it
+                if (!string.IsNullOrWhiteSpace(eventDetails.Title) && scrapedTitles.Add(eventDetails.Title))
+                {
+                    onEventScraped?.Invoke(eventDetails);  // Notify that a unique event was scraped
+                }
+                else
+                {
+                    Console.WriteLine($"Duplicate or invalid event skipped: {eventDetails.Title}");
+                }
             }
         }
     }
 }
+//____________________________________EOF_________________________________________________________________________

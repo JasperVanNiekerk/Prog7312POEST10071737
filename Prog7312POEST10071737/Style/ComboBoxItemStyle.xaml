@@ -1,0 +1,23 @@
+﻿<!--  ComboBoxItemStyle.xaml  -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="CustomComboBoxItemStyle" TargetType="ComboBoxItem">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Background" Value="LightGray" />
+        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="DarkCyan" />
+                <Setter Property="Foreground" Value="LightYellow" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="LightGray" />
+                <Setter Property="Foreground" Value="Black" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

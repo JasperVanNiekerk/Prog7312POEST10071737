@@ -13,8 +13,8 @@
                 <ui:XamlControlsResources />
                 <ResourceDictionary Source="Style/MainButton.xaml" />
                 <ResourceDictionary Source="Style/MenuButtonStyle.xaml" />
+                <ResourceDictionary Source="Style/ComboBoxItemStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>

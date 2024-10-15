@@ -1,4 +1,5 @@
-﻿using Prog7312POEST10071737.Models;
+﻿using ModernWpf;
+using Prog7312POEST10071737.Models;
 using Prog7312POEST10071737.Services;
 using Prog7312POEST10071737.Views;
 using System;
@@ -23,6 +24,7 @@ namespace Prog7312POEST10071737
         {
             InitializeComponent();
             UpdateBackground();
+            ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light;
         }
         //___________________________________________________________________________________________________________
 
