@@ -19,10 +19,18 @@ namespace Prog7312POEST10071737.Services
         /// </summary>
         /// <param name="subject"></param>
         /// <param name="Body"></param>
-        public void EmailSender(string subject, string Body)
+        public void EmailSender(string email, string subject, string Body)
         {
             var SingletonService = UserSingleton.Instance;
-            receiverEmail = SingletonService.GetEmail();
+            if (email.Equals(""))
+            {
+                receiverEmail = SingletonService.GetEmail();
+            }
+            else
+            {
+                receiverEmail = email;
+            }
+
 
             try
             {

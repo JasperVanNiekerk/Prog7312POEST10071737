@@ -56,6 +56,10 @@ namespace Prog7312POEST10071737.Models
         /// </summary>
         public List<string> Categories { get; set; }
 
+        /// <summary>
+        /// Gets or sets the display title (including any priority indicators)
+        /// </summary>
+        public string DisplayTitle { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OurEvents"/> class.
@@ -89,6 +93,8 @@ namespace Prog7312POEST10071737.Models
                 StartDate = DateTime.MinValue; // Set to a default value or throw an exception based on your needs
                 EndDate = DateTime.MinValue;   // Same as above
             }
+
+            DisplayTitle = Title;  // Initialize with regular title
         }
         //___________________________________________________________________________________________________________
 

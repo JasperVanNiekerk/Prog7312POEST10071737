@@ -219,7 +219,7 @@ namespace Prog7312POEST10071737.Views
                 var EmailService = new Services.MyEmailService();
                 var subject = "Report Confirmation";
                 var body = "your report for " + location + " has been submitted.";
-                EmailService.EmailSender(subject, body);
+                EmailService.EmailSender("", subject, body);
             }
 
         }

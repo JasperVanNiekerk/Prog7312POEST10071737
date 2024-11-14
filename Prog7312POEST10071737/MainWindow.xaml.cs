@@ -17,16 +17,88 @@ namespace Prog7312POEST10071737
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly UserSingleton _userSingleton;
+
         /// <summary>
         /// constructor for the main window
         /// </summary>
         public MainWindow()
         {
             InitializeComponent();
+            _userSingleton = UserSingleton.Instance;
+            _userSingleton.LoginStateChanged += UserSingleton_LoginStateChanged;
+            LoginRegisterControl.LoginSuccessful += LoginRegisterControl_LoginSuccessful;
+            UpdateLoginState();
             UpdateBackground();
             ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light;
         }
         //___________________________________________________________________________________________________________
+
+        private void UserSingleton_LoginStateChanged(object sender, EventArgs e)
+        {
+            UpdateLoginState();
+        }
+
+        private void UpdateLoginState()
+        {
+            if (_userSingleton.IsLoggedIn)
+            {
+                LoginStatusText.Text = "Welcome!";
+                LoginButton.ToolTip = $"Logged in as: {_userSingleton.GetCurrentUserEmail()}";
+                // Update any other UI elements that depend on login state
+            }
+            else
+            {
+                LoginStatusText.Text = "Login";
+                LoginButton.ToolTip = "Click to login";
+            }
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_userSingleton.IsLoggedIn)
+            {
+                var result = MessageBox.Show(
+                    "Do you want to log out?",
+                    "Logout Confirmation",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    _userSingleton.Logout();
+                }
+            }
+            else
+            {
+                LoginOverlay.Visibility = Visibility.Visible;
+                // Add fade-in animation
+                var fadeIn = new DoubleAnimation
+                {
+                    From = 0,
+                    To = 1,
+                    Duration = TimeSpan.FromSeconds(0.3)
+                };
+                LoginOverlay.BeginAnimation(OpacityProperty, fadeIn);
+            }
+        }
+
+        private void CloseLoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            HideLoginOverlay();
+        }
+
+        private void HideLoginOverlay()
+        {
+            var fadeOut = new DoubleAnimation
+            {
+                From = 1,
+                To = 0,
+                Duration = TimeSpan.FromSeconds(0.3)
+            };
+            fadeOut.Completed += (s, _) => LoginOverlay.Visibility = Visibility.Collapsed;
+            LoginOverlay.BeginAnimation(OpacityProperty, fadeOut);
+        }
 
         /// <summary>
         /// method to update the background based on the current time of day
@@ -190,6 +262,12 @@ namespace Prog7312POEST10071737
             Application.Current.Shutdown();
         }
         //___________________________________________________________________________________________________________
+
+        private void LoginRegisterControl_LoginSuccessful(object sender, EventArgs e)
+        {
+            HideLoginOverlay();
+            UpdateLoginState();
+        }
     }
 }
 //i love you!

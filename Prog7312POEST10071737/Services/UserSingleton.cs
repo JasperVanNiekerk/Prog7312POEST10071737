@@ -74,14 +74,7 @@ namespace Prog7312POEST10071737.Services
         /// <returns></returns>
         public bool UserExists()
         {
-            if (CurrentUser == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return CurrentUser != null;
         }
         //___________________________________________________________________________________________________________
 
@@ -149,6 +142,59 @@ namespace Prog7312POEST10071737.Services
             return CurrentUser.returnEmail();
         }
         //___________________________________________________________________________________________________________
+
+        public bool IsLoggedIn => CurrentUser != null;
+
+        public event EventHandler LoginStateChanged;
+
+        /// <summary>
+        /// Creates a new user and sets it as the current user
+        /// </summary>
+        /// <param name="username">Username for the new user</param>
+        /// <param name="password">Password for the new user</param>
+        /// <param name="email">Email for the new user</param>
+        /// <returns>True if user creation was successful</returns>
+        public bool CreateUser(string username, string password, string email)
+        {
+            try
+            {
+                CurrentUser = new User(username, password, email);
+                LoginStateChanged?.Invoke(this, EventArgs.Empty);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Logs in a user
+        /// </summary>
+        /// <param name="user">The user to log in</param>
+        public void Login(User user)
+        {
+            CurrentUser = user;
+            LoginStateChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Logs out the current user
+        /// </summary>
+        public void Logout()
+        {
+            CurrentUser = null;
+            LoginStateChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Gets the email of the current user
+        /// </summary>
+        /// <returns>The email of the current user or empty string if no user is logged in</returns>
+        public string GetCurrentUserEmail()
+        {
+            return CurrentUser?.returnEmail() ?? string.Empty;
+        }
     }
 }
 //____________________________________EOF_________________________________________________________________________

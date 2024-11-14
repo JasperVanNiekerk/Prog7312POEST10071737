@@ -102,36 +102,31 @@
                 Orientation="Vertical">
 
                 <!-- <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Becris - Flaticon</a>-->
+
                 <Button
+                    x:Name="LoginButton"
                     Width="75"
                     Height="75"
                     Background="Transparent"
-                    IsEnabled="False"
-                    ToolTip="User Login not suported yet"
-                    ToolTipService.ShowOnDisabled="True">
-                    <Image Opacity="0.75" Source="Icons/user.png" />
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border
-                                x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="40">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border" Property="Background" Value="lightGray" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
+                    Click="LoginButton_Click">
+                    <Grid>
+                        <Image
+                            x:Name="UserIcon"
+                            Opacity="0.75"
+                            Source="Icons/user.png" />
+                        <TextBlock
+                            x:Name="LoginStatusText"
+                            Margin="0,0,0,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            FontSize="10"
+                            Text="Login" />
+                    </Grid>
                 </Button>
-
-
             </StackPanel>
         </Grid>
+
+        <!--  /////////////////////////////////////////////////////////////  -->
 
         <Grid
             x:Name="GridActivity"
@@ -164,9 +159,8 @@
                     Height="150"
                     HorizontalAlignment="Center"
                     BorderThickness="2"
-                    IsEnabled="False"
-                    ToolTip="This feature is not available yet"
-                    ToolTipService.ShowOnDisabled="True">
+                    Click="LoginButton_Click"
+                    ToolTip="login or register">
                     <Image
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
@@ -250,6 +244,33 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch" />
 
+        </Grid>
+
+        <Grid
+            x:Name="LoginOverlay"
+            Panel.ZIndex="100"
+            Visibility="Collapsed">
+            <Rectangle Fill="Black" Opacity="0.5" />
+            <Border
+                Width="500"
+                Height="600"
+                Background="White"
+                CornerRadius="25">
+                <Grid>
+                    <Button
+                        x:Name="CloseLoginButton"
+                        Width="30"
+                        Height="30"
+                        Margin="10"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Panel.ZIndex="1000"
+                        Click="CloseLoginButton_Click"
+                        Content="×"
+                        Style="{StaticResource MainButton}" />
+                    <Views:LoginRegisterView x:Name="LoginRegisterControl" />
+                </Grid>
+            </Border>
         </Grid>
     </Grid>
 </Window>

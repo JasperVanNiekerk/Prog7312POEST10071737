@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace Prog7312POEST10071737.Models
         /// <summary>
         /// Gets or sets the filter events.
         /// </summary>
-        public List<OurEvents> FilterEvents { get; set; }
+        public ObservableCollection<OurEvents> FilterEvents { get; set; }
     }
 }
 //____________________________________EOF_________________________________________________________________________

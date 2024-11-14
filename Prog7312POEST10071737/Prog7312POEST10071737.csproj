@@ -64,6 +64,8 @@
     <Compile Include="Components\ReportDisplayComponent.xaml.cs">
       <DependentUpon>ReportDisplayComponent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Core\ObservableObjects.cs" />
+    <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="Models\Catagory.cs" />
     <Compile Include="Models\FilterModel.cs" />
     <Compile Include="Models\IssueReport.cs" />
@@ -79,6 +81,9 @@
     </Compile>
     <Compile Include="Views\LocalEventsView.xaml.cs">
       <DependentUpon>LocalEventsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginRegisterView.xaml.cs">
+      <DependentUpon>LoginRegisterView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReportFormView.xaml.cs">
       <DependentUpon>ReportFormView.xaml</DependentUpon>
@@ -127,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LocalEventsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginRegisterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

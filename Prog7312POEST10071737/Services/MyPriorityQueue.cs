@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq; 
 
 namespace Prog7312POEST10071737.Services
 {
@@ -47,6 +48,36 @@ namespace Prog7312POEST10071737.Services
         public int Count()
         {
             return elements.Count;
+        }
+
+        /// <summary>
+        /// Attempts to peek at the next item without removing it.
+        /// </summary>
+        public bool TryPeek(out T item)
+        {
+            if (elements.Count > 0)
+            {
+                item = elements[0].item;
+                return true;
+            }
+            item = default;
+            return false;
+        }
+
+        /// <summary>
+        /// Clears all items from the queue.
+        /// </summary>
+        public void Clear()
+        {
+            elements.Clear();
+        }
+
+        /// <summary>
+        /// Returns all items in priority order.
+        /// </summary>
+        public IEnumerable<T> GetAllItems()
+        {
+            return elements.Select(e => e.item);
         }
     }
 }

@@ -2,15 +2,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Prog7312POEST10071737.Core;
 
 namespace Prog7312POEST10071737.Services
 {
     /// <summary>
     /// Singleton class for managing local events.
     /// </summary>
-    public class LocalEventsSingleton
+    public class LocalEventsSingleton : ObservableObject
     {
         private static LocalEventsSingleton instance = null;
         private static readonly object padlock = new object();
@@ -40,17 +42,48 @@ namespace Prog7312POEST10071737.Services
         /// <summary>
         /// Data structure to hold all the events.
         /// </summary>
-        public List<OurEvents> Events { get; set; } = new List<OurEvents>();
+        private ObservableCollection<OurEvents> _events;
+        public ObservableCollection<OurEvents> Events
+        {
+            get { return _events; }
+            set
+            {
+                if (_events != null)
+                {
+                    _events.CollectionChanged -= Events_CollectionChanged;
+                }
+                _events = value;
+                if (_events != null)
+                {
+                    _events.CollectionChanged += Events_CollectionChanged;
+                }
+                OnPropertyChanged(nameof(Events));
+            }
+        }
+
+        private void Events_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            {
+                foreach (OurEvents newEvent in e.NewItems)
+                {
+                    AddCategoriesToSet(newEvent);
+                    AddEventToLookup(newEvent);
+                    AddEventToCategoryLookup(newEvent);
+                }
+            }
+        }
 
         /// <summary>
         /// Priority queue for announcement events.
         /// </summary>
-        public MyPriorityQueue<OurEvents> AnnouncementEventsQueue = new MyPriorityQueue<OurEvents>();
+        public MyPriorityQueue<OurEvents> AnnouncementEventsQueue { get; private set; } = new MyPriorityQueue<OurEvents>();
 
         /// <summary>
         /// Set of unique categories.
         /// </summary>
-        public HashSet<string> UniqueCategories { get; private set; } = new HashSet<string>();
+        private HashSet<string> _uniqueCategories = new HashSet<string>();
+        public IReadOnlyCollection<string> UniqueCategories => _uniqueCategories;
 
         /// <summary>
         /// Lookup table for events.
@@ -69,6 +102,9 @@ namespace Prog7312POEST10071737.Services
 
         private HashSet<string> _eventTitles = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
+        private const string HIGH_PRIORITY_INDICATOR = "⭐ ";
+        public static readonly int PRIORITY_THRESHOLD = 4;  // Made public and static
+
         //___________________________________________________________________________________________________________
 
         /// <summary>
@@ -79,13 +115,13 @@ namespace Prog7312POEST10071737.Services
         public async Task PopulateEventsAsync(Action<OurEvents> onEventScraped)
         {
             var scraper = new ScraperService();
+            Events = new ObservableCollection<OurEvents>();
+
             await scraper.ScrapeEventsAsync(ev =>
             {
                 if (AddEventIfNotExists(ev))
                 {
-                    AddCategoriesToSet(ev);
-                    AddEventToLookup(ev);
-                    AddEventToCategoryLookup(ev);
+                    Events.Add(ev);
                     onEventScraped?.Invoke(ev);
                 }
             });
@@ -99,12 +135,7 @@ namespace Prog7312POEST10071737.Services
         /// <returns>True if the event was added, false otherwise.</returns>
         private bool AddEventIfNotExists(OurEvents ev)
         {
-            if (!string.IsNullOrWhiteSpace(ev.Title) && _eventTitles.Add(ev.Title))
-            {
-                Events.Add(ev);
-                return true;
-            }
-            return false;
+            return !string.IsNullOrWhiteSpace(ev.Title) && _eventTitles.Add(ev.Title);
         }
         //___________________________________________________________________________________________________________
 
@@ -118,8 +149,9 @@ namespace Prog7312POEST10071737.Services
             {
                 foreach (var category in ev.Categories)
                 {
-                    UniqueCategories.Add(category);
+                    _uniqueCategories.Add(category);
                 }
+                OnPropertyChanged(nameof(UniqueCategories));
             }
         }
         //___________________________________________________________________________________________________________
@@ -214,15 +246,7 @@ namespace Prog7312POEST10071737.Services
         /// <returns>The list of events that match the search string.</returns>
         public List<OurEvents> GetSearchedEvents(string searchString)
         {
-            List<OurEvents> searchedEvents = new List<OurEvents>();
-            foreach (var ev in Events)
-            {
-                if (ev.SearchEvent(searchString))
-                {
-                    searchedEvents.Add(ev);
-                }
-            }
-            return searchedEvents;
+            return Events.Where(ev => ev.SearchEvent(searchString)).ToList();
         }
         //___________________________________________________________________________________________________________
 
@@ -278,15 +302,8 @@ namespace Prog7312POEST10071737.Services
         /// <returns>The list of events happening now.</returns>
         private List<OurEvents> GetEventsNow()
         {
-            var eventsNow = new List<OurEvents>();
-            foreach (var ev in Events)
-            {
-                if (ev.StartDate <= DateTime.Now && ev.EndDate >= DateTime.Now)
-                {
-                    eventsNow.Add(ev);
-                }
-            }
-            return eventsNow;
+            var now = DateTime.Now;
+            return Events.Where(ev => ev.StartDate <= now && ev.EndDate >= now).ToList();
         }
         //___________________________________________________________________________________________________________
 
@@ -296,15 +313,9 @@ namespace Prog7312POEST10071737.Services
         /// <returns>The list of events happening this week.</returns>
         private List<OurEvents> GetEventsThisWeek()
         {
-            var eventsThisWeek = new List<OurEvents>();
-            foreach (var ev in Events)
-            {
-                if (ev.StartDate >= DateTime.Now && ev.StartDate <= DateTime.Now.AddDays(7))
-                {
-                    eventsThisWeek.Add(ev);
-                }
-            }
-            return eventsThisWeek;
+            var now = DateTime.Now;
+            var weekFromNow = now.AddDays(7);
+            return Events.Where(ev => ev.StartDate >= now && ev.StartDate <= weekFromNow).ToList();
         }
         //___________________________________________________________________________________________________________
 
@@ -314,15 +325,9 @@ namespace Prog7312POEST10071737.Services
         /// <returns>The list of events happening this month.</returns>
         private List<OurEvents> GetEventsThisMonth()
         {
-            var eventsThisMonth = new List<OurEvents>();
-            foreach (var ev in Events)
-            {
-                if (ev.StartDate >= DateTime.Now && ev.StartDate <= DateTime.Now.AddMonths(1))
-                {
-                    eventsThisMonth.Add(ev);
-                }
-            }
-            return eventsThisMonth;
+            var now = DateTime.Now;
+            var monthFromNow = now.AddMonths(1);
+            return Events.Where(ev => ev.StartDate >= now && ev.StartDate <= monthFromNow).ToList();
         }
         //___________________________________________________________________________________________________________
 
@@ -356,6 +361,124 @@ namespace Prog7312POEST10071737.Services
             {
                 AnnouncementEventsQueue.Enqueue(ev, priorityThisMonth);
             }
+        }
+
+        public void PopulateAnnouncementQueue()
+        {
+            AnnouncementEventsQueue.Clear();
+            var now = DateTime.Now;
+            var events = Events?.ToList() ?? new List<OurEvents>();
+            
+            if (events.Count == 0) return;
+
+            // First pass: Add priority events
+            foreach (var ev in events.OrderBy(e => e.StartDate))
+            {
+                var priority = CalculateEventPriority(ev);
+                if (priority <= PRIORITY_THRESHOLD)
+                {
+                    // Add visual indicator for high-priority events
+                    ev.DisplayTitle = HIGH_PRIORITY_INDICATOR + ev.Title;
+                    AnnouncementEventsQueue.Enqueue(ev, priority);
+                }
+            }
+
+            // If queue is empty, add all future events with adjusted priority
+            if (AnnouncementEventsQueue.Count() == 0)
+            {
+                var futureEvents = events
+                    .Where(e => e.StartDate >= now)
+                    .OrderBy(e => e.StartDate);
+
+                foreach (var ev in futureEvents)
+                {
+                    // Use original title without priority indicator
+                    ev.DisplayTitle = ev.Title;
+                    AnnouncementEventsQueue.Enqueue(ev, 10 + (int)(ev.StartDate - now).TotalDays);
+                }
+            }
+        }
+
+        public string FormatEventBannerText(OurEvents ev)
+        {
+            var priority = CalculateEventPriority(ev);
+            var timeStatus = GetEventTimeStatus(ev);
+            return $"{ev.DisplayTitle} - {ev.Dates} {timeStatus}";
+        }
+
+        private string GetEventTimeStatus(OurEvents ev)
+        {
+            var now = DateTime.Now;
+            
+            if (ev.StartDate <= now && ev.EndDate >= now)
+                return "(Happening Now)";
+            
+            if (ev.StartDate > now)
+            {
+                var daysUntil = (ev.StartDate - now).TotalDays;
+                if (daysUntil <= 1)
+                    return "(Starting Soon)";
+                if (daysUntil <= 7)
+                    return "(This Week)";
+                if (daysUntil <= 30)
+                    return "(This Month)";
+            }
+            
+            return "";
+        }
+
+        public int CalculateEventPriority(OurEvents ev)
+        {
+            var now = DateTime.Now;
+            var daysUntilStart = (ev.StartDate - now).TotalDays;
+            var daysUntilEnd = (ev.EndDate - now).TotalDays;
+
+            // Currently running events get highest priority
+            if (ev.StartDate <= now && ev.EndDate >= now)
+                return 1;
+            
+            // Events starting within 24 hours
+            if (daysUntilStart >= 0 && daysUntilStart <= 1)
+                return 2;
+            
+            // Events starting within the week
+            if (daysUntilStart > 1 && daysUntilStart <= 7)
+                return 3;
+            
+            // Events starting within two weeks
+            if (daysUntilStart > 7 && daysUntilStart <= 14)
+                return 4;
+            
+            // Events starting within the month
+            if (daysUntilStart > 14 && daysUntilStart <= 30)
+                return 5;
+            
+            // Future events beyond a month
+            if (daysUntilStart > 30)
+                return 6;
+            
+            // Past events get lowest priority
+            return 7;
+        }
+
+        
+        public void RefreshCategories()
+        {
+            _uniqueCategories.Clear();
+            if (Events != null)
+            {
+                foreach (var ev in Events)
+                {
+                    if (ev.Categories != null)
+                    {
+                        foreach (var category in ev.Categories)
+                        {
+                            _uniqueCategories.Add(category);
+                        }
+                    }
+                }
+            }
+            OnPropertyChanged(nameof(UniqueCategories));
         }
     }
 }
