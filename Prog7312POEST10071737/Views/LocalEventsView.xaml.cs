@@ -24,7 +24,8 @@ namespace Prog7312POEST10071737.Views
         private bool _timerStarted = false;
         public ObservableCollection<Guid> EventIDs = new ObservableCollection<Guid>();
         private HashSet<Guid> _addedEventIds = new HashSet<Guid>();
-//___________________________________________________________________________________________________________
+        private bool checkIfPreviousClicked = false;
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Initializes a new instance of the LocalEventsView class.
@@ -45,7 +46,7 @@ namespace Prog7312POEST10071737.Views
             BannerButton.Content = "Loading events...";
             LoadEvents();
         }
-//___________________________________________________________________________________________________________
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Handles the timer tick event. Updates the current event displayed.
@@ -63,7 +64,7 @@ namespace Prog7312POEST10071737.Views
         {
             _events.Clear();
             _addedEventIds.Clear();
-            
+
             // Create a temporary list to sort events before queuing
             var eventsToQueue = new List<(OurEvents Event, int Priority)>();
 
@@ -105,31 +106,31 @@ namespace Prog7312POEST10071737.Views
             // Currently running events get highest priority (1)
             if (ev.StartDate <= now && ev.EndDate >= now)
                 return 1;
-            
+
             // Events starting within 24 hours get priority 2
             if (daysUntilStart >= 0 && daysUntilStart <= 1)
                 return 2;
-            
+
             // Events starting within the week get priority 3
             if (daysUntilStart > 1 && daysUntilStart <= 7)
                 return 3;
-            
+
             // Events starting within two weeks get priority 4
             if (daysUntilStart > 7 && daysUntilStart <= 14)
                 return 4;
-            
+
             // Events starting within the month get priority 5
             if (daysUntilStart > 14 && daysUntilStart <= 30)
                 return 5;
-            
+
             // All other future events get priority 6
             if (daysUntilStart > 30)
                 return 6;
-            
+
             // Past events get lowest priority (7)
             return 7;
         }
-//___________________________________________________________________________________________________________
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Updates the display with information about the current event.
@@ -140,8 +141,8 @@ namespace Prog7312POEST10071737.Views
             {
                 var currentEvent = _eventsSingleton.AnnouncementEventsQueue.Dequeue();
                 BannerButton.Content = _eventsSingleton.FormatEventBannerText(currentEvent);
-                
-                 // Set the banner's background to the first image of the current event
+
+                // Set the banner's background to the first image of the current event
                 if (currentEvent.Images != null && currentEvent.Images.Count > 0)
                 {
                     var firstImage = currentEvent.Images[0];
@@ -152,7 +153,7 @@ namespace Prog7312POEST10071737.Views
                     BannerButton.Background = imageBrush;
                 }
                 // Re-queue the event at the end to create a circular display
-                _eventsSingleton.AnnouncementEventsQueue.Enqueue(currentEvent, 
+                _eventsSingleton.AnnouncementEventsQueue.Enqueue(currentEvent,
                     _eventsSingleton.CalculateEventPriority(currentEvent));
             }
             else
@@ -165,7 +166,7 @@ namespace Prog7312POEST10071737.Views
         private void UpdateBannerStyle(OurEvents currentEvent)
         {
             var priority = _eventsSingleton.CalculateEventPriority(currentEvent);
-            
+
             if (priority <= LocalEventsSingleton.PRIORITY_THRESHOLD)
             {
                 BannerButton.FontWeight = FontWeights.Bold;
@@ -177,7 +178,7 @@ namespace Prog7312POEST10071737.Views
                 BannerButton.Background = new SolidColorBrush(Colors.Transparent);
             }
         }
-//___________________________________________________________________________________________________________
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Determines the time frame of an event relative to the current date.
@@ -193,7 +194,7 @@ namespace Prog7312POEST10071737.Views
             else
                 return "starting this month";
         }
-//___________________________________________________________________________________________________________
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Handles the click event for the banner button.
@@ -205,7 +206,7 @@ namespace Prog7312POEST10071737.Views
                 MessageBox.Show($"Event clicked: {eventId}");
             }
         }
-//___________________________________________________________________________________________________________
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Refreshes the events list and starts the timer if not already started.
@@ -220,7 +221,7 @@ namespace Prog7312POEST10071737.Views
                 _timer.Start();
             }
         }
-//___________________________________________________________________________________________________________
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Loads events asynchronously and initializes the event card loader.
@@ -229,13 +230,13 @@ namespace Prog7312POEST10071737.Views
         {
             var eventService = LocalEventsSingleton.Instance;
             BannerButton.Content = "Loading events...";
-            
+
             // Initialize UI components
             EventCardLoader();
-            
+
             // Ensure banner is visible
             BannerButton.Visibility = Visibility.Visible;
-            
+
             // Start loading events with the callback
             eventService.PopulateEventsAsync(AddEventToUI).ContinueWith(task =>
             {
@@ -246,7 +247,7 @@ namespace Prog7312POEST10071737.Views
                         BannerButton.Content = "No events currently available";
                         return;
                     }
-                    
+
                     // Populate queue and start updates
                     eventService.PopulateAnnouncementQueue();
                     StartBannerUpdates();
@@ -267,7 +268,7 @@ namespace Prog7312POEST10071737.Views
                 BannerButton.Content = "Stay tuned for upcoming events!";
             }
         }
-//___________________________________________________________________________________________________________
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Adds a new event to the UI asynchronously.
@@ -281,16 +282,16 @@ namespace Prog7312POEST10071737.Views
                 {
                     // Add to events collection first
                     _events.Add(newEvent);
-                    
+
                     // Add to announcement queue
                     _eventsSingleton.AnnouncementEventsQueue.Enqueue(newEvent, CalculateEventPriority(newEvent));
-                    
+
                     // Update EventIDs collection for display
                     if (!EventIDs.Contains(newEvent.Id))
                     {
                         EventIDs.Add(newEvent.Id);
                     }
-                    
+
                     // Update categories dropdown if needed
                     if (newEvent.Categories != null)
                     {
@@ -302,7 +303,7 @@ namespace Prog7312POEST10071737.Views
                             }
                         }
                     }
-                    
+
                     // Start banner updates only if we have events and timer isn't started
                     if (!_timerStarted && _events.Count > 0)
                     {
@@ -311,7 +312,7 @@ namespace Prog7312POEST10071737.Views
                         _timer.Start();
                         BannerButton.Visibility = Visibility.Visible;
                     }
-                    
+
                     // Update loading message
                     if (WarringTB.Opacity > 0)
                     {
@@ -321,7 +322,7 @@ namespace Prog7312POEST10071737.Views
                 }
             });
         }
-//___________________________________________________________________________________________________________
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Loads event cards and initializes UI components for event display.
@@ -350,12 +351,14 @@ namespace Prog7312POEST10071737.Views
 
             EventItemsControl.ItemsSource = EventIDs;
             CategoryCB.ItemsSource = _eventsSingleton.UniqueCategories;
-            DateDP.SelectedDate = DateTime.Now;
+            StartDateDP.SelectedDate = DateTime.Now;
+            EndDateDP.SelectedDate = DateTime.Now.AddDays(1);
 
             var filter = new FilterModel
             {
-                FilterCatagory = CategoryCB.SelectedItem as string,
-                FilterDate = DateDP.SelectedDate.Value,
+                FilterCategory = CategoryCB.SelectedItem as string,
+                StartDate = StartDateDP.SelectedDate.Value,
+                EndDate = EndDateDP.SelectedDate.Value,
                 FilterEvents = _events
             };
             _eventsSingleton.AddFilter(filter);
@@ -364,29 +367,58 @@ namespace Prog7312POEST10071737.Views
         }
         //___________________________________________________________________________________________________________
 
-        /// <summary>
-        /// Handles the key down event for the search text box.
-        /// </summary>
-        private void searchTB_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            PerformSearch();
+        }
+
+        private void searchTB_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                string userInput = searchTB.Text;
+                PerformSearch();
+                e.Handled = true;
+            }
+        }
 
-                var temp = new ObservableCollection<OurEvents>(_eventsSingleton.GetSearchedEvents(userInput));
+        private void PerformSearch()
+        {
+            string searchTerm = searchTB.Text?.Trim();
+
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                // Reset to show all events
                 EventIDs.Clear();
-                foreach (var ev in temp)
+                foreach (var ev in _eventsSingleton.Events)
                 {
                     EventIDs.Add(ev.Id);
                 }
-                if (EventIDs.Count == 0)
-                {
-                    WarringTB.Text = "No events found";
-                    WarringTB.Opacity = 1;
-                    EventCardsSV.Opacity = 0;
-                }
+                WarringTB.Opacity = 0;
+                EventCardsSV.Opacity = 1;
+                return;
+            }
 
-                e.Handled = true;
+            var searchResults = _eventsSingleton.Events
+                .Where(ev => ev.SearchEvent(searchTerm))
+                .ToList();
+
+            EventIDs.Clear();
+            foreach (var ev in searchResults)
+            {
+                EventIDs.Add(ev.Id);
+            }
+
+            // Update UI visibility based on results
+            if (EventIDs.Count == 0)
+            {
+                WarringTB.Text = "No events found matching your search";
+                WarringTB.Opacity = 1;
+                EventCardsSV.Opacity = 0;
+            }
+            else
+            {
+                WarringTB.Opacity = 0;
+                EventCardsSV.Opacity = 1;
             }
         }
         //___________________________________________________________________________________________________________
@@ -403,7 +435,7 @@ namespace Prog7312POEST10071737.Views
                 textBox.Text = string.Empty;
             }
         }
-//___________________________________________________________________________________________________________
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Handles the lost focus event for the search text box.
@@ -424,39 +456,43 @@ namespace Prog7312POEST10071737.Views
         /// </summary>
         private void FilterBTN_Click(object sender, RoutedEventArgs e)
         {
-            var SelectedCategory = CategoryCB.SelectedItem as string;
-            var SelectedDate = DateDP.SelectedDate;
+            var selectedCategory = CategoryCB.SelectedItem as string;
+            var startDate = StartDateDP.SelectedDate ?? DateTime.Now;
+            var endDate = EndDateDP.SelectedDate ?? startDate.AddDays(1);
 
-            var CF = _eventsSingleton.GetEventsByCategory(SelectedCategory);
-            var DF = new ObservableCollection<OurEvents>();  // Changed from List to ObservableCollection
-            foreach (var ev in CF)
-            {
-                if (ev.StartDate <= SelectedDate.Value && ev.EndDate >= SelectedDate.Value)
-                {
-                    DF.Add(ev);
-                }
-            }
+            var filteredEvents = _eventsSingleton.GetEventsByDateRange(selectedCategory, startDate, endDate);
 
             EventIDs.Clear();
-            foreach (var ev in DF)
+            foreach (var ev in filteredEvents)
             {
                 EventIDs.Add(ev.Id);
             }
 
             if (EventIDs.Count == 0)
             {
-                WarringTB.Text = "No events found";
+                WarringTB.Text = "No events found in the selected date range";
                 WarringTB.Opacity = 1;
                 EventCardsSV.Opacity = 0;
             }
-
-            var filter = new FilterModel
+            else
             {
-                FilterCatagory = SelectedCategory,
-                FilterDate = SelectedDate.Value,
-                FilterEvents = DF  // Convert to List since FilterModel expects a List
+                WarringTB.Opacity = 0;
+                EventCardsSV.Opacity = 1;
+            }
+
+            var currentFilter = new FilterModel
+            {
+                FilterCategory = selectedCategory,
+                StartDate = startDate,
+                EndDate = endDate,
+                FilterEvents = new ObservableCollection<OurEvents>(filteredEvents)
             };
-            _eventsSingleton.AddFilter(filter);
+
+            // Only add to stack if different from current top
+            if (!_eventsSingleton.Filters.Any() || !currentFilter.Equals(_eventsSingleton.Filters.Peek()))
+            {
+                _eventsSingleton.AddFilter(currentFilter);
+            }
         }
         //___________________________________________________________________________________________________________
 
@@ -467,12 +503,30 @@ namespace Prog7312POEST10071737.Views
         {
             EventIDs.Clear();
             var PrevFilter = _eventsSingleton.RemoveFilter();
-            foreach (var ev in PrevFilter.FilterEvents)
+
+            // Check if the button was clicked before
+            if (!checkIfPreviousClicked)
             {
-                EventIDs.Add(ev.Id);
+                // Go back two filters if clicked before
+                var SecondPrevFilter = _eventsSingleton.RemoveFilter();
+                foreach (var ev in SecondPrevFilter.FilterEvents)
+                {
+                    EventIDs.Add(ev.Id);
+                }
+                checkIfPreviousClicked = true; // Set to true after first click
             }
-            CategoryCB.ItemsSource = PrevFilter.FilterCatagory;
-            DateDP.SelectedDate = PrevFilter.FilterDate;
+            else
+            {
+                // Go back one filter if first click
+                foreach (var ev in PrevFilter.FilterEvents)
+                {
+                    EventIDs.Add(ev.Id);
+                }
+            }
+
+            CategoryCB.ItemsSource = PrevFilter.FilterCategory;
+            StartDateDP.SelectedDate = PrevFilter.StartDate;
+            EndDateDP.SelectedDate = PrevFilter.EndDate;
 
             if (WarringTB.Opacity == 1)
             {
@@ -480,7 +534,7 @@ namespace Prog7312POEST10071737.Views
                 EventCardsSV.Opacity = 1;
             }
         }
-//___________________________________________________________________________________________________________
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Calculates the average brightness of a bitmap image.
@@ -511,7 +565,7 @@ namespace Prog7312POEST10071737.Views
 
             return totalBrightness / pixelCount;
         }
-//___________________________________________________________________________________________________________
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Asynchronously loads events using the event service.
@@ -521,7 +575,7 @@ namespace Prog7312POEST10071737.Views
             var eventService = LocalEventsSingleton.Instance;
             await eventService.PopulateEventsAsync(AddEventToUI);
         }
-//___________________________________________________________________________________________________________
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Handles the mouse down event for the event display component.
@@ -542,7 +596,7 @@ namespace Prog7312POEST10071737.Views
                 CCGrid.Opacity = 1;
             }
         }
-//___________________________________________________________________________________________________________
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Handles the click event for a generic button.
@@ -559,20 +613,47 @@ namespace Prog7312POEST10071737.Views
         {
             _timerStarted = false;
             _timer.Stop();
-            
+
             // Clear existing data
             _events.Clear();
             _addedEventIds.Clear();
             EventIDs.Clear();
-            
+
             // Repopulate queue
             _eventsSingleton.PopulateAnnouncementQueue();
-            
+
             // Restart banner updates
             LoadEvents();
         }
+
+        private void LoadCategories()
+        {
+            var categories = _eventsSingleton.UniqueCategories;
+            CategoryCB.ItemsSource = categories;
+
+            // Preserve selected category if it exists
+            if (CategoryCB.SelectedItem != null)
+            {
+                var currentCategory = CategoryCB.SelectedItem.ToString();
+                if (categories.Contains(currentCategory))
+                {
+                    CategoryCB.SelectedItem = currentCategory;
+                }
+            }
+        }
+
+        private void DateRange_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            if (StartDateDP.SelectedDate.HasValue && EndDateDP.SelectedDate.HasValue)
+            {
+                if (EndDateDP.SelectedDate < StartDateDP.SelectedDate)
+                {
+                    EndDateDP.SelectedDate = StartDateDP.SelectedDate.Value.AddDays(1);
+                }
+            }
+        }
     }
-//___________________________________________________________________________________________________________
+    //___________________________________________________________________________________________________________
 
     /// <summary>
     /// Compares OurEvents objects for equality based on their Id.

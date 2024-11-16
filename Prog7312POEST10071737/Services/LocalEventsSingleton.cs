@@ -82,7 +82,7 @@ namespace Prog7312POEST10071737.Services
         /// <summary>
         /// Set of unique categories.
         /// </summary>
-        private HashSet<string> _uniqueCategories = new HashSet<string>();
+        private HashSet<string> _uniqueCategories = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         public IReadOnlyCollection<string> UniqueCategories => _uniqueCategories;
 
         /// <summary>
@@ -479,6 +479,39 @@ namespace Prog7312POEST10071737.Services
                 }
             }
             OnPropertyChanged(nameof(UniqueCategories));
+        }
+
+        /// <summary>
+        /// Gets events filtered by category and date range.
+        /// </summary>
+        /// <param name="category">The category to filter by, or null for all categories.</param>
+        /// <param name="startDate">The start date of the range.</param>
+        /// <param name="endDate">The end date of the range.</param>
+        /// <returns>A list of events matching the criteria.</returns>
+        public List<OurEvents> GetEventsByDateRange(string category, DateTime startDate, DateTime endDate)
+        {
+            // Start with all events
+            var query = Events.AsEnumerable();
+            
+            // Filter by category if specified
+            if (!string.IsNullOrEmpty(category))
+            {
+                query = query.Where(ev => 
+                    ev.Categories != null && 
+                    ev.Categories.Contains(category, StringComparer.OrdinalIgnoreCase));
+            }
+            
+            // Filter by date range
+            // An event is within range if:
+            // 1. It starts within the range, OR
+            // 2. It ends within the range, OR
+            // 3. It spans the entire range
+            query = query.Where(ev =>
+                (ev.StartDate >= startDate && ev.StartDate <= endDate) ||  // Starts within range
+                (ev.EndDate >= startDate && ev.EndDate <= endDate) ||      // Ends within range
+                (ev.StartDate <= startDate && ev.EndDate >= endDate));     // Spans the range
+            
+            return query.ToList();
         }
     }
 }

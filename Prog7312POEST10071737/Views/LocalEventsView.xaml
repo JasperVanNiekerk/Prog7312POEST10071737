@@ -55,19 +55,13 @@
                             Orientation="Horizontal">
                             <TextBox
                                 x:Name="searchTB"
+                                Margin="8,0"
                                 VerticalAlignment="Center"
-                                VerticalContentAlignment="Top"
-                                Panel.ZIndex="1"
                                 Background="Transparent"
-                                BorderBrush="Transparent"
                                 BorderThickness="0"
-                                FocusVisualStyle="{x:Null}"
-                                FontWeight="DemiBold"
+                                FontSize="13"
                                 Foreground="Black"
-                                GotFocus="searchTB_GotFocus"
-                                KeyDown="searchTB_KeyDown"
-                                LostFocus="searchTB_LostFocus"
-                                Text="Search">
+                                KeyDown="searchTB_KeyDown">
                                 <TextBox.Style>
                                     <Style TargetType="TextBox">
                                         <Setter Property="Template">
@@ -79,6 +73,26 @@
                                                 </ControlTemplate>
                                             </Setter.Value>
                                         </Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource Self}}" Value="">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="TextBox">
+                                                            <Border Background="{TemplateBinding Background}">
+                                                                <Grid>
+                                                                    <ScrollViewer x:Name="PART_ContentHost" />
+                                                                    <TextBlock
+                                                                        Margin="8,0"
+                                                                        Foreground="Gray"
+                                                                        IsHitTestVisible="False"
+                                                                        Text="Search events..." />
+                                                                </Grid>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
@@ -135,14 +149,24 @@
                     </ComboBox.ItemContainerStyle>
                 </ComboBox>
                 <Border Height="5" />
-                <DatePicker
-                    x:Name="DateDP"
-                    MaxHeight="25"
-                    Margin="5,0"
-                    HorizontalAlignment="Stretch"
-                    Background="white"
-                    BorderThickness="0"
-                    Foreground="Black" />
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="5,0">
+                    <TextBlock Margin="5,0" Text="Start Date" />
+                    <DatePicker
+                        x:Name="StartDateDP"
+                        MaxHeight="25"
+                        Margin="5,0"
+                        SelectedDateChanged="DateRange_Changed" />
+
+                    <TextBlock Margin="5,5,5,0" Text="End Date" />
+                    <DatePicker
+                        x:Name="EndDateDP"
+                        MaxHeight="25"
+                        Margin="5,0"
+                        SelectedDateChanged="DateRange_Changed" />
+                </StackPanel>
 
                 <Border Height="5" />
 
