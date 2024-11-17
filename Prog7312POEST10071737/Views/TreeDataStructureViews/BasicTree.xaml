@@ -1,0 +1,17 @@
+﻿<UserControl
+    x:Class="Prog7312POEST10071737.Views.TreeDataStructureViews.BasicTree"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Prog7312POEST10071737.Views.TreeDataStructureViews"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    MinWidth="475"
+    MinHeight="395"
+    Background="Transparent"
+    mc:Ignorable="d">
+    <Grid>
+        <TreeView x:Name="IssueReportsTreeView" Margin="10">
+            <!-- TreeView items will be populated dynamically from code-behind -->
+        </TreeView>
+    </Grid>
+</UserControl>

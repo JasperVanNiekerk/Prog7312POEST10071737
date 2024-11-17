@@ -91,6 +91,12 @@
     <Compile Include="Views\ReportViewsView.xaml.cs">
       <DependentUpon>ReportViewsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ServiceRequestStatusView.xaml.cs">
+      <DependentUpon>ServiceRequestStatusView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TreeDataStructureViews\BasicTree.xaml.cs">
+      <DependentUpon>BasicTree.xaml</DependentUpon>
+    </Compile>
     <Page Include="Components\EventDisplayComponent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -144,6 +150,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ReportViewsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ServiceRequestStatusView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TreeDataStructureViews\BasicTree.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

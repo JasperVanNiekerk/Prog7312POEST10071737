@@ -78,9 +78,8 @@
                     Click="Control3RadioButton_Checked"
                     Content="Service Request Status"
                     FontWeight="ExtraBold"
-                    IsEnabled="False"
                     Style="{StaticResource MainButton}"
-                    ToolTip="This feature is not available yet"
+                    ToolTip="Service request status page"
                     ToolTipService.ShowOnDisabled="True" />
 
                 <Button
@@ -205,12 +204,10 @@
                     <RadioButton
                         x:Name="RB3"
                         Width="200"
-                        Checked="Control1RadioButton_Checked"
+                        Checked="Control3RadioButton_Checked"
                         Content="Service Request Status"
-                        IsEnabled="False"
                         Style="{StaticResource MenuButtonStyle}"
-                        ToolTip="This feature is not available yet"
-                        ToolTipService.ShowOnDisabled="True" />
+                        ToolTip="This feature is not available yet" />
                 </ui:RadioButtons>
 
                 <Button
