@@ -73,6 +73,7 @@
     <Compile Include="Models\UploadedFile.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\AVLTree.cs" />
+    <Compile Include="Services\BinarySearchTree.cs" />
     <Compile Include="Services\LocalEventsSingleton.cs" />
     <Compile Include="Services\MyEmailService.cs" />
     <Compile Include="Services\MyPriorityQueue.cs" />

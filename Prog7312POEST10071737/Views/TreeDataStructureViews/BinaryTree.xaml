@@ -9,5 +9,11 @@
     MinHeight="395"
     Background="Transparent"
     mc:Ignorable="d">
-    <Grid />
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
+            <TreeView x:Name="IssueReportsTreeView">
+                <!-- TreeView items will be populated dynamically from code-behind -->
+            </TreeView>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

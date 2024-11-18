@@ -33,50 +33,74 @@ namespace Prog7312POEST10071737.Services
 
         public void Insert(TKey key, TValue value)
         {
+            if (key == null)
+                throw new ArgumentNullException(nameof(key));
+
             Node newNode = new Node(key, value);
-            root = BSTInsert(root, newNode);
-            FixViolation(newNode);
-        }
 
-        private Node BSTInsert(Node root, Node node)
-        {
+            // If root is null, make new node the root and color it black
             if (root == null)
-                return node;
+            {
+                root = newNode;
+                root.Color = Color.Black;
+                return;
+            }
 
-            if (node.Key.CompareTo(root.Key) < 0)
+            // Regular BST insertion
+            Node current = root;
+            Node parent = null;
+
+            while (current != null)
             {
-                root.Left = BSTInsert(root.Left, node);
-                root.Left.Parent = root;
+                parent = current;
+                int comparison = key.CompareTo(current.Key);
+
+                if (comparison < 0)
+                    current = current.Left;
+                else if (comparison > 0)
+                    current = current.Right;
+                else
+                {
+                    // Key already exists, add value to the list
+                    current.Values.Add(value);
+                    return;
+                }
             }
-            else if (node.Key.CompareTo(root.Key) > 0)
-            {
-                root.Right = BSTInsert(root.Right, node);
-                root.Right.Parent = root;
-            }
+
+            // Set parent of new node
+            newNode.Parent = parent;
+
+            // Set new node as left or right child
+            int compareResult = key.CompareTo(parent.Key);
+            if (compareResult < 0)
+                parent.Left = newNode;
             else
-            {
-                // Duplicate key, add value to list
-                root.Values.AddRange(node.Values);
-            }
+                parent.Right = newNode;
 
-            return root;
+            // Fix Red-Black tree violations
+            FixViolation(newNode);
         }
 
         private void FixViolation(Node node)
         {
+            if (node == null) return;
+
             Node parent = null;
             Node grandParent = null;
 
-            while (node != root && node.Color == Color.Red && node.Parent.Color == Color.Red)
+            while (node != root && node.Color == Color.Red && node.Parent != null && node.Parent.Color == Color.Red)
             {
                 parent = node.Parent;
                 grandParent = parent.Parent;
+
+                if (grandParent == null)
+                    break;
 
                 if (parent == grandParent.Left)
                 {
                     Node uncle = grandParent.Right;
 
-                    // Case 1: Uncle is also red
+                    // Case 1: Uncle is red
                     if (uncle != null && uncle.Color == Color.Red)
                     {
                         grandParent.Color = Color.Red;
@@ -96,7 +120,9 @@ namespace Prog7312POEST10071737.Services
 
                         // Case 3: Node is left child
                         RightRotate(grandParent);
-                        SwapColors(parent, grandParent);
+                        Color tempColor = parent.Color;
+                        parent.Color = grandParent.Color;
+                        grandParent.Color = tempColor;
                         node = parent;
                     }
                 }
@@ -104,7 +130,7 @@ namespace Prog7312POEST10071737.Services
                 {
                     Node uncle = grandParent.Left;
 
-                    // Mirror Case 1
+                    // Case 1: Uncle is red
                     if (uncle != null && uncle.Color == Color.Red)
                     {
                         grandParent.Color = Color.Red;
@@ -114,7 +140,7 @@ namespace Prog7312POEST10071737.Services
                     }
                     else
                     {
-                        // Mirror Case 2
+                        // Case 2: Node is left child
                         if (node == parent.Left)
                         {
                             RightRotate(parent);
@@ -122,9 +148,11 @@ namespace Prog7312POEST10071737.Services
                             parent = node.Parent;
                         }
 
-                        // Mirror Case 3
+                        // Case 3: Node is right child
                         LeftRotate(grandParent);
-                        SwapColors(parent, grandParent);
+                        Color tempColor = parent.Color;
+                        parent.Color = grandParent.Color;
+                        grandParent.Color = tempColor;
                         node = parent;
                     }
                 }
@@ -133,73 +161,78 @@ namespace Prog7312POEST10071737.Services
             root.Color = Color.Black;
         }
 
-        private void SwapColors(Node node1, Node node2)
+        private void LeftRotate(Node x)
         {
-            Color temp = node1.Color;
-            node1.Color = node2.Color;
-            node2.Color = temp;
-        }
+            if (x == null || x.Right == null)
+                return;
 
-        private void LeftRotate(Node node)
-        {
-            Node y = node.Right;
-            node.Right = y.Left;
+            Node y = x.Right;
+            x.Right = y.Left;
 
             if (y.Left != null)
-                y.Left.Parent = node;
+                y.Left.Parent = x;
 
-            y.Parent = node.Parent;
+            y.Parent = x.Parent;
 
-            if (node.Parent == null)
+            if (x.Parent == null)
                 root = y;
-            else if (node == node.Parent.Left)
-                node.Parent.Left = y;
+            else if (x == x.Parent.Left)
+                x.Parent.Left = y;
             else
-                node.Parent.Right = y;
+                x.Parent.Right = y;
 
-            y.Left = node;
-            node.Parent = y;
+            y.Left = x;
+            x.Parent = y;
         }
 
-        private void RightRotate(Node node)
+        private void RightRotate(Node y)
         {
-            Node y = node.Left;
-            node.Left = y.Right;
+            if (y == null || y.Left == null)
+                return;
 
-            if (y.Right != null)
-                y.Right.Parent = node;
+            Node x = y.Left;
+            y.Left = x.Right;
 
-            y.Parent = node.Parent;
+            if (x.Right != null)
+                x.Right.Parent = y;
 
-            if (node.Parent == null)
-                root = y;
-            else if (node == node.Parent.Right)
-                node.Parent.Right = y;
+            x.Parent = y.Parent;
+
+            if (y.Parent == null)
+                root = x;
+            else if (y == y.Parent.Right)
+                y.Parent.Right = x;
             else
-                node.Parent.Left = y;
+                y.Parent.Left = x;
 
-            y.Right = node;
-            node.Parent = y;
+            x.Right = y;
+            y.Parent = x;
         }
 
         public List<TValue> Search(TKey key)
         {
+            if (key == null)
+                return new List<TValue>();
+
             Node node = Search(root, key);
-            return node != null ? node.Values : null;
+            return node?.Values ?? new List<TValue>();
         }
 
         private Node Search(Node node, TKey key)
         {
-            if (node == null)
-                return null;
-
-            int cmp = key.CompareTo(node.Key);
-            if (cmp < 0)
-                return Search(node.Left, key);
-            else if (cmp > 0)
-                return Search(node.Right, key);
-            else
+            if (node == null || key.Equals(node.Key))
                 return node;
+
+            if (key.CompareTo(node.Key) < 0)
+                return Search(node.Left, key);
+            else
+                return Search(node.Right, key);
+        }
+
+        // Helper method to check if tree is empty
+        public bool IsEmpty()
+        {
+            return root == null;
         }
     }
 }
