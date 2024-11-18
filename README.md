@@ -11,6 +11,9 @@
   - [Using Command-Line](#using-command-line)
 - [Running the Project](#running-the-project)
 - [Usage Instructions](#usage-instructions)
+  - [Submitting an Issue Report](#submitting-an-issue-report)
+  - [Viewing Issue Reports](#viewing-issue-reports)
+  - [Managing Events](#managing-events)
 - [Contributing Guidelines](#contributing-guidelines)
 - [License Information](#license-information)
 - [Contact Information](#contact-information)
@@ -24,6 +27,7 @@
 - **Issue Reporting:** Users can submit detailed reports including descriptions, locations, media files, and categorize issues for better management.
 - **Real-Time Updates:** The application leverages data structures like AVL Trees and Binary Search Trees to manage and display reports efficiently.
 - **User Subscription:** Users can subscribe to specific issues to receive updates and notifications regarding their status.
+- **Events Management:** Organize, view, and manage local events and announcements with ease.
 - **Responsive UI:** Built with ModernWpfUI, the application offers a clean and intuitive user interface with smooth navigation.
 - **Email Notifications:** Integrated email service to send confirmation and updates to users upon report submissions and status changes.
 - **Dynamic Visualization:** TreeView components dynamically display issue reports, allowing for easy navigation and management.
@@ -190,10 +194,16 @@ After building the project, you can run the executable directly:
    - **Media Files:** Upload any relevant media files (images, documents) related to the issue.
    - **Report Confirmation:** Optionally, check the confirmation box to receive an email notification.
 
-5. **Submit the Report**
+### Managing Events
 
-   - Click the `Submit` button to send your report.
-   - A confirmation message will appear if the submission is successful.
+1. **Access the Events Page**
+
+   - From the main menu, navigate to the `Events` page to view and manage local events and announcements.
+
+2. **View Events**
+
+   - The Events page displays a list of upcoming and past events.
+   - Each event includes details such as title, description, date, and location.
 
 ### Viewing Issue Reports
 
@@ -223,6 +233,10 @@ After building the project, you can run the executable directly:
 
 ![Reports TreeView](https://github.com/user-attachments/assets/c1c13639-e9ee-49d4-b915-823aecd2313e)
 *TreeView displaying submitted issue reports.*
+
+![Events Page](https://github.com/user-attachments/assets/91b1c4f4-1a3a-4008-a20d-013be1ac86e4)
+
+*Events page for managing and viewing local events.*
 
 ## License Information
 
