@@ -1,7 +1,5 @@
 # Prog7312POEST10071737
 
-![Project Banner](path/to/banner/image.png)
-
 ## Table of Contents
 
 - [Project Overview](#project-overview)
@@ -87,10 +85,6 @@ The project relies on several external libraries and packages to function correc
 - **ModernWpfUI**
   - **Version:** 0.9.6
   - **Documentation:** [ModernWpfUI on NuGet](https://www.nuget.org/packages/ModernWpfUI/)
-  
-- **QuickGraph**
-  - **Version:** 3.6.61119.7
-  - **Documentation:** [QuickGraph on NuGet](https://www.nuget.org/packages/QuickGraph/)
 
 ### .NET Framework
 
@@ -184,7 +178,11 @@ After building the project, you can run the executable directly:
 
    - Click on the `Report Issues` button in the main window.
 
-3. **Fill in the Report Form**
+3. **Navigate to the report form**
+
+   - Click on the `See an Issue Report it`
+
+4.  **Fill in the Report Form**
 
    - **Description:** Enter a detailed description of the issue.
    - **Location:** Specify the location related to the issue.
@@ -192,7 +190,7 @@ After building the project, you can run the executable directly:
    - **Media Files:** Upload any relevant media files (images, documents) related to the issue.
    - **Report Confirmation:** Optionally, check the confirmation box to receive an email notification.
 
-4. **Submit the Report**
+5. **Submit the Report**
 
    - Click the `Submit` button to send your report.
    - A confirmation message will appear if the submission is successful.
@@ -213,55 +211,18 @@ After building the project, you can run the executable directly:
    - Users can subscribe to specific reports to receive updates.
    - Subscribed users are listed under each report.
 
-### Managing Reports
 
-- **Update Status:** Change the status of reports (Pending, InProgress, Resolved, Closed) directly from the TreeView.
-- **View Details:** Click on individual reports to view more information and attached media files.
 
 ### Screenshots
 
-![Main Window](path/to/main-window-screenshot.png)
+![Main Window](https://github.com/user-attachments/assets/0a6a5fca-7e00-4bec-8b9f-ce703b2f2a98)
 *Main window showcasing the reporting interface.*
 
-![Report Form](path/to/report-form-screenshot.png)
+![Report Form](https://github.com/user-attachments/assets/e6de60fb-e365-4552-8276-f8992d7cc149)
 *Report form for submitting new issue reports.*
 
-![Reports TreeView](path/to/reports-treeview-screenshot.png)
+![Reports TreeView](https://github.com/user-attachments/assets/c1c13639-e9ee-49d4-b915-823aecd2313e)
 *TreeView displaying submitted issue reports.*
-
-## Contributing Guidelines
-
-We welcome contributions to enhance the functionality and features of this project. To contribute, please follow these guidelines:
-
-1. **Fork the Repository**
-
-2. **Create a New Branch**
-
-   ```bash
-   git checkout -b feature/YourFeatureName
-   ```
-
-3. **Commit Your Changes**
-
-   ```bash
-   git commit -m "Add some feature"
-   ```
-
-4. **Push to Your Fork**
-
-   ```bash
-   git push origin feature/YourFeatureName
-   ```
-
-5. **Open a Pull Request**
-
-   - Navigate to the original repository on GitHub.
-   - Click on `Compare & pull request`.
-   - Provide a detailed description of your changes and submit the pull request.
-
-### Code of Conduct
-
-Please ensure that your contributions adhere to our [Code of Conduct](LICENSE).
 
 ## License Information
 
@@ -271,7 +232,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 If you encounter any issues or have questions regarding the project, feel free to reach out:
 
-- **Email:** your-email@example.com
+- **Email:** jaspervanniekerk1111@gmail.com
 - **GitHub Issues:** [Open an Issue](https://github.com/your-username/Prog7312POEST10071737/issues)
 
 ---
