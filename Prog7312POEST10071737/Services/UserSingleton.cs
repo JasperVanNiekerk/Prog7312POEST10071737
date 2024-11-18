@@ -1,6 +1,5 @@
 ﻿using Prog7312POEST10071737.Models;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,19 +9,19 @@ namespace Prog7312POEST10071737.Services
     public class UserSingleton
     {
         /// <summary>
-        /// defines the current user
+        /// Defines the current user.
         /// </summary>
         private User CurrentUser;
         //___________________________________________________________________________________________________________
 
         /// <summary>
-        /// defines the list of issue reports
+        /// Defines the list of issue reports.
         /// </summary>
         public ObservableCollection<IssueReport> IssueReports { get; } = new ObservableCollection<IssueReport>();
         //___________________________________________________________________________________________________________
 
         /// <summary>
-        /// defines the instance of the user singleton
+        /// Defines the instance of the user singleton.
         /// </summary>
         private static UserSingleton instance = null;
 
@@ -40,12 +39,10 @@ namespace Prog7312POEST10071737.Services
         //___________________________________________________________________________________________________________
 
         /// <summary>
-        /// constructor for the user singleton
+        /// Private constructor to prevent external instantiation.
         /// </summary>
-        private UserSingleton()
-        {
+        private UserSingleton() { }
 
-        }
         //___________________________________________________________________________________________________________
 
         /// <summary>
@@ -59,19 +56,9 @@ namespace Prog7312POEST10071737.Services
         //___________________________________________________________________________________________________________
 
         /// <summary>
-        /// returns the list of issue reports
+        /// Checks if a user is currently logged in.
         /// </summary>
-        /// <returns></returns>
-        public ObservableCollection<IssueReport> GetIssueReports()
-        {
-            return IssueReports;
-        }
-        //___________________________________________________________________________________________________________
-
-        /// <summary>
-        /// method to check if the user exists
-        /// </summary>
-        /// <returns></returns>
+        /// <returns>True if a user exists, false otherwise.</returns>
         public bool UserExists()
         {
             return CurrentUser != null;
@@ -93,29 +80,20 @@ namespace Prog7312POEST10071737.Services
         //___________________________________________________________________________________________________________
 
         /// <summary>
-        /// method to add a issue report
+        /// Adds an issue report without subscribing a user.
         /// </summary>
-        /// <param name="description"></param>
-        /// <param name="location"></param>
-        /// <param name="MediaPath"></param>
-        /// <param name="category"></param>
-        public void AddIssueReport(string description, string location, List<byte[]> MediaPath, string category)
+        public void AddIssueReport(string description, string location, List<UploadedFile> mediaPaths, string category)
         {
-            IssueReports.Add(new IssueReport(description, location, MediaPath, category));
+            IssueReports.Add(new IssueReport(description, location, mediaPaths, category));
         }
         //___________________________________________________________________________________________________________
 
         /// <summary>
-        /// method to add a issue report with subscribed user
+        /// Adds an issue report with a subscribed user.
         /// </summary>
-        /// <param name="description"></param>
-        /// <param name="location"></param>
-        /// <param name="MediaPath"></param>
-        /// <param name="category"></param>
-        /// <param name="user"></param>
-        public void AddIssueReport(string description, string location, List<byte[]> MediaPath, string category, Guid user)
+        public void AddIssueReport(string description, string location, List<UploadedFile> mediaPaths, string category, Guid user)
         {
-            IssueReports.Add(new IssueReport(description, location, MediaPath, category, user));
+            IssueReports.Add(new IssueReport(description, location, mediaPaths, category, user));
         }
         //___________________________________________________________________________________________________________
 
@@ -196,5 +174,4 @@ namespace Prog7312POEST10071737.Services
             return CurrentUser?.returnEmail() ?? string.Empty;
         }
     }
-}
-//____________________________________EOF_________________________________________________________________________
+}//____________________________________EOF_________________________________________________________________________

@@ -5,6 +5,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media.Imaging;
+using Prog7312POEST10071737.Models;
+using Prog7312POEST10071737.Services;
 
 namespace Prog7312POEST10071737.Views
 {
@@ -16,8 +18,7 @@ namespace Prog7312POEST10071737.Views
         /// <summary>
         /// declare variables
         /// </summary>
-        private List<byte[]> Media = new List<byte[]>();
-        private List<string> MediaNames = new List<string>();
+        private List<UploadedFile> UploadedFiles = new List<UploadedFile>();
         private string location;
         private string category;
         private string description;
@@ -66,7 +67,7 @@ namespace Prog7312POEST10071737.Views
             {
                 location = LocationTB.Text;
                 category = CatagoryCB.Text;
-                var media = Media;
+                var media = UploadedFiles;
 
                 var SingletonService = Services.UserSingleton.Instance;
 
@@ -98,20 +99,27 @@ namespace Prog7312POEST10071737.Views
         /// <param name="e"></param>
         private void AddMediaButtonClicked(object sender, RoutedEventArgs e)
         {
-            var dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.Multiselect = true;
-            dialog.Filter = "All files (*.*)|*.*";
-            dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-            dialog.ShowDialog();
-
-            foreach (var file in dialog.FileNames)
+            var dialog = new Microsoft.Win32.OpenFileDialog
             {
-                MediaNames.Add(GetFileName(file));
-                Media.Add(FileToBitArray(file));
-            }
+                Multiselect = true,
+                Filter = "All files (*.*)|*.*",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
+            };
 
-            UpdateFirstImage();
-            UpdateMediaList();
+            bool? result = dialog.ShowDialog();
+            if (result == true)
+            {
+                foreach (var file in dialog.FileNames)
+                {
+                    string fileName = GetFileName(file);
+                    byte[] fileData = FileToBitArray(file);
+                    UploadedFile uploadedFile = new UploadedFile(fileName, fileData);
+                    UploadedFiles.Add(uploadedFile);
+                }
+
+                UpdateFirstImage();
+                UpdateMediaList();
+            }
         }
         //___________________________________________________________________________________________________________
 
@@ -144,16 +152,16 @@ namespace Prog7312POEST10071737.Views
         /// </summary>
         private void UpdateFirstImage()
         {
-            if (Media.Count > 0)
+            if (UploadedFiles.Count > 0)
             {
                 var count = 0;
                 bool imageLoaded = false;
 
-                while (Media.Count > count && !imageLoaded)
+                while (UploadedFiles.Count > count && !imageLoaded)
                 {
-                    byte[] firstMediaArray = Media[count];
+                    byte[] fileData = UploadedFiles[count].FileData;
 
-                    using (var ms = new MemoryStream(firstMediaArray))
+                    using (var ms = new MemoryStream(fileData))
                     {
                         try
                         {
@@ -162,12 +170,10 @@ namespace Prog7312POEST10071737.Views
                             bitmap.StreamSource = ms;
                             bitmap.CacheOption = BitmapCacheOption.OnLoad;
                             bitmap.EndInit();
-
-                            // Force free resources after loading the image
                             bitmap.Freeze();
 
                             ImageDisplayIMG.Source = bitmap;
-                            imageLoaded = true; // Image successfully loaded, exit loop
+                            imageLoaded = true;
                         }
                         catch (NotSupportedException)
                         {
@@ -177,7 +183,6 @@ namespace Prog7312POEST10071737.Views
                     }
                 }
 
-                // No valid image found
                 if (!imageLoaded)
                 {
                     ImageDisplayIMG.Source = null;
@@ -191,14 +196,17 @@ namespace Prog7312POEST10071737.Views
         //___________________________________________________________________________________________________________
 
 
+        /// <summary>
+        /// Updates the media list display with file names.
+        /// </summary>
         private void UpdateMediaList()
         {
             var mediaList = "";
-            if (Media.Count > 0)
+            if (UploadedFiles.Count > 0)
             {
-                foreach (var media in MediaNames)
+                foreach (var file in UploadedFiles)
                 {
-                    mediaList += media + "\n";
+                    mediaList += file.FileName + "\n";
                 }
                 MediaList.FontSize = 8;
             }

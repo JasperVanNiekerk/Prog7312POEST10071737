@@ -8,7 +8,7 @@ namespace Prog7312POEST10071737.Models
         /// defines the category of the issue
         /// </summary>
         private int CategoryId;
-        private string CategoryName;
+        public string CategoryName;
         //___________________________________________________________________________________________________________
 
         /// <summary>

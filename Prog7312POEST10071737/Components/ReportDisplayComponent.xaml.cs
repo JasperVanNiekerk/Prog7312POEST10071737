@@ -26,17 +26,13 @@ namespace Prog7312POEST10071737.Components
             set { SetValue(IssueReportProperty, value); }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ReportDisplayComponent"/> class.
-        /// </summary>
         public ReportDisplayComponent()
         {
             InitializeComponent();
             if (IssueReport != null)
             {
-                ReportImage.SetValue(Image.SourceProperty, new BitmapImage(new Uri(GetFirstImagePath().ToString())));
+                SetReportImage();
             }
-
         }
 
         private static void OnIssueReportChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -47,55 +43,37 @@ namespace Prog7312POEST10071737.Components
                 control.SetReportImage(); // Update the image when IssueReport changes
             }
         }
+
         private void SetReportImage()
         {
-            if (IssueReport != null)
+            if (IssueReport != null && IssueReport.MediaPaths != null && IssueReport.MediaPaths.Count > 0)
             {
-                BitmapImage bitmap = GetFirstImagePath();
-                if (bitmap != null)
+                foreach (var uploadedFile in IssueReport.MediaPaths)
                 {
-                    // Set the image source for the Image control
-                    ReportImage.Background = new ImageBrush(bitmap);
-                }
-                else
-                {
-                    ReportImage.Background = null; // Clear image if no valid image data is found
-                }
-            }
-        }
-        private BitmapImage GetFirstImagePath()
-        {
-            var Media = IssueReport.MediaPaths;
-            if (Media.Count > 0)
-            {
-                var count = 0;
-                bool imageLoaded = false;
-                while (Media.Count > count && !imageLoaded)
-                {
-                    byte[] firstMediaArray = Media[count];
-                    using (var ms = new MemoryStream(firstMediaArray))
+                    try
                     {
-                        try
+                        BitmapImage bitmap = new BitmapImage();
+                        using (var ms = new MemoryStream(uploadedFile.FileData))
                         {
-                            BitmapImage bitmap = new BitmapImage();
                             bitmap.BeginInit();
                             bitmap.StreamSource = ms;
                             bitmap.CacheOption = BitmapCacheOption.OnLoad;
                             bitmap.EndInit();
-                            // Force free resources after loading the image
                             bitmap.Freeze();
-                            imageLoaded = true; // Image successfully loaded, exit loop
-                            return bitmap;
+                            ReportImage.Background = new ImageBrush(bitmap);
+                            break; // Display only the first valid image
                         }
-                        catch (NotSupportedException)
-                        {
-                            count++;
-                        }
+                    }
+                    catch (NotSupportedException)
+                    {
+                        ReportImage.Background = null;
                     }
                 }
             }
-            return null; // Return null if no valid image data is found
+            else
+            {
+                ReportImage.Background = null;
+            }
         }
-
     }
 }

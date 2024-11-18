@@ -70,10 +70,13 @@
     <Compile Include="Models\FilterModel.cs" />
     <Compile Include="Models\IssueReport.cs" />
     <Compile Include="Models\OurEvents.cs" />
+    <Compile Include="Models\UploadedFile.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Services\AVLTree.cs" />
     <Compile Include="Services\LocalEventsSingleton.cs" />
     <Compile Include="Services\MyEmailService.cs" />
     <Compile Include="Services\MyPriorityQueue.cs" />
+    <Compile Include="Services\RedBlackTree.cs" />
     <Compile Include="Services\ScraperService.cs" />
     <Compile Include="Services\UserSingleton.cs" />
     <Compile Include="Views\EventView.xaml.cs">
@@ -94,8 +97,14 @@
     <Compile Include="Views\ServiceRequestStatusView.xaml.cs">
       <DependentUpon>ServiceRequestStatusView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TreeDataStructureViews\AVLandRedBlackTree.xaml.cs">
+      <DependentUpon>AVLandRedBlackTree.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TreeDataStructureViews\BasicTree.xaml.cs">
       <DependentUpon>BasicTree.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TreeDataStructureViews\BinaryTree.xaml.cs">
+      <DependentUpon>BinaryTree.xaml</DependentUpon>
     </Compile>
     <Page Include="Components\EventDisplayComponent.xaml">
       <SubType>Designer</SubType>
@@ -157,7 +166,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\TreeDataStructureViews\AVLandRedBlackTree.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TreeDataStructureViews\BasicTree.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TreeDataStructureViews\BinaryTree.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

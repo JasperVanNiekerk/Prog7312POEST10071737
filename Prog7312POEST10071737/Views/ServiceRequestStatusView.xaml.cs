@@ -33,12 +33,12 @@ namespace Prog7312POEST10071737.Views
 
         private void FilterBTN_Click(object sender, RoutedEventArgs e)
         {
-
+            TreeCC.Content = new TreeDataStructureViews.AVLandRedBlackTree();
         }
 
         private void AlphaBeticalBTN_Click(object sender, RoutedEventArgs e)
         {
-
+            TreeCC.Content = new TreeDataStructureViews.BinaryTree();
         }
 
         private void GraphBTN_Click(object sender, RoutedEventArgs e)

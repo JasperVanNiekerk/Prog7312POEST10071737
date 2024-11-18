@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -7,7 +6,7 @@ using System.Runtime.CompilerServices;
 namespace Prog7312POEST10071737.Models
 {
     /// <summary>
-    /// enum for the status of the report
+    /// Enum for the status of the report.
     /// </summary>
     public enum ReportStatus
     {
@@ -20,21 +19,20 @@ namespace Prog7312POEST10071737.Models
     public class IssueReport : INotifyPropertyChanged
     {
         /// <summary>
-        /// declare the event for the property changed
+        /// Event for property changed notifications.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
         //___________________________________________________________________________________________________________
 
-        /// <summary>
-        /// declare the fields for the issue report
-        /// </summary>
         private Guid _id;
+        private string _name;
         private string _description;
         private string _location;
-        private List<byte[]> _mediaPaths;
+        private List<UploadedFile> _mediaPaths;
         private ReportStatus _status;
         private string _category;
         private List<Guid> _subscribedUsers;
+        private DateTime _dateCreated;
         //___________________________________________________________________________________________________________
 
         /// <summary>
@@ -44,6 +42,16 @@ namespace Prog7312POEST10071737.Models
         {
             get => _id;
             set => SetField(ref _id, value);
+        }
+        //___________________________________________________________________________________________________________
+
+        /// <summary>
+        /// Gets or sets the description of the issue report.
+        /// </summary>
+        public string name
+        {
+            get => _name;
+            set => SetField(ref _name, value);
         }
         //___________________________________________________________________________________________________________
 
@@ -70,7 +78,7 @@ namespace Prog7312POEST10071737.Models
         /// <summary>
         /// Gets or sets the media paths associated with the issue report.
         /// </summary>
-        public List<byte[]> MediaPaths
+        public List<UploadedFile> MediaPaths
         {
             get => _mediaPaths;
             set => SetField(ref _mediaPaths, value);
@@ -105,16 +113,29 @@ namespace Prog7312POEST10071737.Models
             get => _subscribedUsers;
             set => SetField(ref _subscribedUsers, value);
         }
+        /// <summary>
+        /// Gets or sets the date and time when the issue report was created.
+        /// </summary>
+        public DateTime DateCreated
+        {
+            get => _dateCreated;
+            set => SetField(ref _dateCreated, value);
+        }
         //___________________________________________________________________________________________________________
 
         /// <summary>
-        /// default constructor for the issue report
+        /// Default constructor for the issue report.
         /// </summary>
-        /// <param name="description"></param>
-        /// <param name="location"></param>
-        /// <param name="mediaPaths"></param>
-        /// <param name="categoryID"></param>
-        public IssueReport(string description, string location, List<byte[]> mediaPaths, string categoryID)
+        public IssueReport()
+        {
+            MediaPaths = new List<UploadedFile>();
+            SubscribedUsers = new List<Guid>();
+        }
+
+        /// <summary>
+        /// Constructor for the issue report.
+        /// </summary>
+        public IssueReport(string description, string location, List<UploadedFile> mediaPaths, string categoryID)
         {
             Id = Guid.NewGuid();
             Description = description;
@@ -123,49 +144,43 @@ namespace Prog7312POEST10071737.Models
             Status = ReportStatus.Pending;
             Category = categoryID;
             SubscribedUsers = new List<Guid>();
+            DateCreated = DateTime.Now;
+            name = location + "_" + DateTime.Now + "_" + categoryID;
         }
         //___________________________________________________________________________________________________________
 
         /// <summary>
-        /// constructor for the issue report with a user
+        /// Constructor for the issue report with a subscribed user.
         /// </summary>
-        /// <param name="description"></param>
-        /// <param name="location"></param>
-        /// <param name="mediaPaths"></param>
-        /// <param name="categoryID"></param>
-        /// <param name="user"></param>
-        public IssueReport(string description, string location, List<byte[]> mediaPaths, string categoryID, Guid user)
+        public IssueReport(string description, string location, List<UploadedFile> mediaPaths, string categoryID, Guid user)
             : this(description, location, mediaPaths, categoryID)
         {
             SubscribedUsers.Add(user);
         }
-        //___________________________________________________________________________________________________________
 
         /// <summary>
-        /// subscribe a user to the issue report
+        /// Subscribes a user to the issue report.
         /// </summary>
-        /// <param name="userId"></param>
         public void Subscribe(Guid userId)
         {
-            SubscribedUsers.Add(userId);
-            OnPropertyChanged(nameof(SubscribedUsers));
+            if (!SubscribedUsers.Contains(userId))
+            {
+                SubscribedUsers.Add(userId);
+                OnPropertyChanged(nameof(SubscribedUsers));
+            }
         }
-        //___________________________________________________________________________________________________________
 
         /// <summary>
-        /// update the status of the issue report
+        /// Updates the status of the issue report.
         /// </summary>
-        /// <param name="status"></param>
         public void UpdateStatus(ReportStatus status)
         {
             Status = status;
         }
-        //___________________________________________________________________________________________________________
 
         /// <summary>
-        /// event handler for the property changed
+        /// Raises the property changed event.
         /// </summary>
-        /// <param name="propertyName"></param>
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -173,13 +188,8 @@ namespace Prog7312POEST10071737.Models
         //___________________________________________________________________________________________________________
 
         /// <summary>
-        /// set the field of the issue report
+        /// Sets the field and raises property changed if needed.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="field"></param>
-        /// <param name="value"></param>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
         protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(field, value)) return false;

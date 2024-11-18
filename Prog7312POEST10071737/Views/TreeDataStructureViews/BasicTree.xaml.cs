@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using Prog7312POEST10071737.Models;
 using Prog7312POEST10071737.Services;
 
 namespace Prog7312POEST10071737.Views.TreeDataStructureViews
@@ -17,7 +21,7 @@ namespace Prog7312POEST10071737.Views.TreeDataStructureViews
             InitializeComponent();
             _userSingleton = UserSingleton.Instance;
             LoadIssueReports();
-            // subscribe to collection changed because IssueReports can be modified at runtime
+            // Subscribe to collection changed because IssueReports can be modified at runtime
             _userSingleton.IssueReports.CollectionChanged += IssueReports_CollectionChanged;
         }
 
@@ -27,9 +31,22 @@ namespace Prog7312POEST10071737.Views.TreeDataStructureViews
 
             foreach (var report in _userSingleton.IssueReports)
             {
+                // Create a Border to wrap the Issue Report Header
+                Border reportHeaderBorder = new Border
+                {
+                    Background = Brushes.White,
+                    Padding = new Thickness(5),
+                    CornerRadius = new CornerRadius(5),
+                    Child = new TextBlock
+                    {
+                        Text = $"{report.name}",
+                        FontWeight = FontWeights.Bold
+                    }
+                };
+
                 TreeViewItem reportItem = new TreeViewItem
                 {
-                    Header = $"Issue Report {_userSingleton.IssueReports.IndexOf(report) + 1}",
+                    Header = reportHeaderBorder,
                     IsExpanded = false
                 };
 
@@ -57,36 +74,50 @@ namespace Prog7312POEST10071737.Views.TreeDataStructureViews
                 };
                 reportItem.Items.Add(locationItem);
 
-                // Media Paths
-                TreeViewItem mediaPathsItem = new TreeViewItem
+                // Media Files
+                TreeViewItem mediaFilesItem = new TreeViewItem
                 {
-                    Header = "Media Paths:",
+                    Header = "Uploaded Files:",
                     IsExpanded = false
                 };
 
                 if (report.MediaPaths != null && report.MediaPaths.Any())
                 {
-                    foreach (var media in report.MediaPaths)
+                    foreach (var file in report.MediaPaths)
                     {
-                        string base64String = Convert.ToBase64String(media);
-                        TreeViewItem mediaItem = new TreeViewItem
+                        TreeViewItem fileItem = new TreeViewItem
                         {
-                            Header = base64String,
+                            Header = file.FileName,
                             IsExpanded = false
                         };
-                        mediaPathsItem.Items.Add(mediaItem);
+
+                        fileItem.ToolTip = "Double click to open file.";
+                        
+                        fileItem.MouseDoubleClick += (s, e) =>
+                        {
+                            try
+                            {
+                                file.OpenFile();
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Unable to open file {file.FileName}. Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                        };
+
+                        mediaFilesItem.Items.Add(fileItem);
                     }
                 }
                 else
                 {
-                    TreeViewItem noMediaItem = new TreeViewItem
+                    TreeViewItem noFilesItem = new TreeViewItem
                     {
-                        Header = "No Media Available",
+                        Header = "No Files Uploaded",
                         IsExpanded = false
                     };
-                    mediaPathsItem.Items.Add(noMediaItem);
+                    mediaFilesItem.Items.Add(noFilesItem);
                 }
-                reportItem.Items.Add(mediaPathsItem);
+                reportItem.Items.Add(mediaFilesItem);
 
                 // Status
                 TreeViewItem statusItem = new TreeViewItem
