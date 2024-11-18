@@ -41,6 +41,11 @@ namespace Prog7312POEST10071737.Views
             TreeCC.Content = new TreeDataStructureViews.BinaryTree();
         }
 
+        private void PopularityBTN_Click(object sender, RoutedEventArgs e)
+        {
+            TreeCC.Content = new TreeDataStructureViews.Heap();
+        }
+
         private void GraphBTN_Click(object sender, RoutedEventArgs e)
         {
 

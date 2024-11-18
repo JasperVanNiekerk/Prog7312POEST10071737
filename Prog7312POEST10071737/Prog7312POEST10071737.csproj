@@ -75,6 +75,7 @@
     <Compile Include="Services\AVLTree.cs" />
     <Compile Include="Services\BinarySearchTree.cs" />
     <Compile Include="Services\LocalEventsSingleton.cs" />
+    <Compile Include="Services\MaxHeap.cs" />
     <Compile Include="Services\MyEmailService.cs" />
     <Compile Include="Services\MyPriorityQueue.cs" />
     <Compile Include="Services\RedBlackTree.cs" />
@@ -106,6 +107,9 @@
     </Compile>
     <Compile Include="Views\TreeDataStructureViews\BinaryTree.xaml.cs">
       <DependentUpon>BinaryTree.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TreeDataStructureViews\Heap.xaml.cs">
+      <DependentUpon>Heap.xaml</DependentUpon>
     </Compile>
     <Page Include="Components\EventDisplayComponent.xaml">
       <SubType>Designer</SubType>
@@ -176,6 +180,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TreeDataStructureViews\BinaryTree.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TreeDataStructureViews\Heap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
