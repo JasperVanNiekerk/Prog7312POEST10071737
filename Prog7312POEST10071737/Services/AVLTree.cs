@@ -6,15 +6,45 @@ namespace Prog7312POEST10071737.Services
 {
     public class AVLTree<TKey, TValue> where TKey : IComparable<TKey>
     {
+        /// <summary>
+        /// Represents a node in the AVL tree.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the key.</typeparam>
+        /// <typeparam name="TValue">The type of the value.</typeparam>
         private class Node
         {
-            public TKey Key;
-            public List<TValue> Values;
-            public Node Left;
-            public Node Right;
-            public int Height;
+            /// <summary>
+            /// Gets or sets the key of the node.
+            /// </summary>
+            public TKey Key { get; set; }
+
+            /// <summary>
+            /// Gets or sets the list of values associated with the key.
+            /// </summary>
+            public List<TValue> Values { get; set; }
+
+            /// <summary>
+            /// Gets or sets the left child of the node.
+            /// </summary>
+            public Node Left { get; set; }
+
+            /// <summary>
+            /// Gets or sets the right child of the node.
+            /// </summary>
+            public Node Right { get; set; }
+
+            /// <summary>
+            /// Gets or sets the height of the node.
+            /// </summary>
+            public int Height { get; set; }
             //___________________________________________________________________________________________________________
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Node"/> class with the specified key and value.
+            /// </summary>
+            /// <param name="key">The key of the node.</param>
+            /// <param name="value">The value associated with the key.</param>
+            /// 
             public Node(TKey key, TValue value)
             {
                 Key = key;

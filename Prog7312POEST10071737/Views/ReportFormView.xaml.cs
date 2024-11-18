@@ -82,7 +82,7 @@ namespace Prog7312POEST10071737.Views
                 }
 
                 ReportConfirmation();
-                UploadedFiles.Clear();
+                MediaList.Text = "Media";
                 LocationTB.Text = "";
                 CatagoryCB.Text = "";
                 DescriptionTB.Document.Blocks.Clear();
