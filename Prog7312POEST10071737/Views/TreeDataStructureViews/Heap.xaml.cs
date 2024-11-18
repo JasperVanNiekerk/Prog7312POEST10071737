@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using System.Windows.Controls;
-using Prog7312POEST10071737.Models;
+﻿using Prog7312POEST10071737.Models;
 using Prog7312POEST10071737.Services;
+using System.Windows.Controls;
 
 namespace Prog7312POEST10071737.Views.TreeDataStructureViews
 {
@@ -12,7 +11,11 @@ namespace Prog7312POEST10071737.Views.TreeDataStructureViews
     {
         private readonly UserSingleton _userSingleton;
         private readonly MaxHeap<IssueReport> _maxHeap;
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Heap"/> class.
+        /// </summary>
         public Heap()
         {
             InitializeComponent();
@@ -24,7 +27,11 @@ namespace Prog7312POEST10071737.Views.TreeDataStructureViews
 
             LoadReports();
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Loads the reports into the ReportsListView.
+        /// </summary>
         private void LoadReports()
         {
             // Clear existing items
@@ -47,10 +54,17 @@ namespace Prog7312POEST10071737.Views.TreeDataStructureViews
                 });
             }
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Handles the CollectionChanged event of the IssueReports and reloads the reports.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">The event arguments.</param>
         private void IssueReports_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             LoadReports();
         }
     }
 }
+//____________________________________EOF_________________________________________________________________________

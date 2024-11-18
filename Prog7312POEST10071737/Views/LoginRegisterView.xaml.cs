@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Prog7312POEST10071737.Services;
+using System;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Prog7312POEST10071737.Services;
-using System.Security.Cryptography;
 using System.Windows.Threading;
 
 namespace Prog7312POEST10071737.Views
@@ -23,19 +14,59 @@ namespace Prog7312POEST10071737.Views
     /// </summary>
     public partial class LoginRegisterView : UserControl
     {
+        /// <summary>
+        /// The email service used for sending emails.
+        /// </summary>
         private readonly MyEmailService _emailService;
+        //___________________________________________________________________________________________________________
+
+        /// <summary>
+        /// The user service for managing user data.
+        /// </summary>
         private readonly UserSingleton _userService;
+        //___________________________________________________________________________________________________________
+
+        /// <summary>
+        /// The current OTP (One-Time Password) generated for login.
+        /// </summary>
         private string _currentOtp;
+        //___________________________________________________________________________________________________________
+
+        /// <summary>
+        /// The expiry date and time of the current OTP.
+        /// </summary>
         private DateTime _otpExpiry;
+        //___________________________________________________________________________________________________________
+
+        /// <summary>
+        /// The timer used to update the OTP expiry time.
+        /// </summary>
         private DispatcherTimer _otpTimer;
+        //___________________________________________________________________________________________________________
+
+        /// <summary>
+        /// The validity period of the OTP in minutes.
+        /// </summary>
         private const int OTP_VALIDITY_MINUTES = 5;
+        //___________________________________________________________________________________________________________
 
-        // Define a delegate for the event
+        /// <summary>
+        /// Delegate for the LoginSuccessful event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
         public delegate void LoginSuccessfulEventHandler(object sender, EventArgs e);
-        
-        // Define the event using the delegate
-        public event LoginSuccessfulEventHandler LoginSuccessful;
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Event raised when the login is successful.
+        /// </summary>
+        public event LoginSuccessfulEventHandler LoginSuccessful;
+        //___________________________________________________________________________________________________________
+
+        /// <summary>
+        /// Initializes a new instance of the LoginRegisterView class.
+        /// </summary>
         public LoginRegisterView()
         {
             InitializeComponent();
@@ -43,14 +74,24 @@ namespace Prog7312POEST10071737.Views
             _userService = UserSingleton.Instance;
             InitializeOtpTimer();
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Initializes the OTP timer.
+        /// </summary>
         private void InitializeOtpTimer()
         {
             _otpTimer = new DispatcherTimer();
             _otpTimer.Interval = TimeSpan.FromSeconds(1);
             _otpTimer.Tick += OtpTimer_Tick;
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Event handler for the OTP timer tick event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
         private void OtpTimer_Tick(object sender, EventArgs e)
         {
             if (DateTime.Now >= _otpExpiry)
@@ -67,12 +108,22 @@ namespace Prog7312POEST10071737.Views
                 OtpTimerText.Text = $"OTP expires in: {timeLeft.Minutes}:{timeLeft.Seconds:D2}";
             }
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Event handler for the input field text changed event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
         private void InputField_TextChanged(object sender, TextChangedEventArgs e)
         {
             ValidateInputs();
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Validates the input fields and updates the UI accordingly.
+        /// </summary>
         private void ValidateInputs()
         {
             var isValid = !string.IsNullOrWhiteSpace(UsernameTextBox.Text) &&
@@ -80,7 +131,7 @@ namespace Prog7312POEST10071737.Views
                          IsValidEmail(EmailTextBox.Text);
 
             SendOtpButton.IsEnabled = isValid;
-            
+
             if (!isValid)
             {
                 StatusMessage.Text = GetValidationErrorMessage();
@@ -90,7 +141,12 @@ namespace Prog7312POEST10071737.Views
                 StatusMessage.Text = string.Empty;
             }
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Gets the validation error message based on the current input values.
+        /// </summary>
+        /// <returns>The validation error message.</returns>
         private string GetValidationErrorMessage()
         {
             if (string.IsNullOrWhiteSpace(UsernameTextBox.Text))
@@ -101,7 +157,13 @@ namespace Prog7312POEST10071737.Views
                 return "Please enter a valid email address";
             return string.Empty;
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Event handler for the Send OTP button click event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
         private async void SendOtpButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -132,11 +194,17 @@ namespace Prog7312POEST10071737.Views
                 StatusMessage.Text = "Failed to send OTP. Please try again.";
             }
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Event handler for the Verify OTP button click event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
         private void VerifyOtpButton_Click(object sender, RoutedEventArgs e)
         {
             var enteredOtp = OtpTextBox.Text.Trim();
-            
+
             if (DateTime.Now > _otpExpiry)
             {
                 StatusMessage.Text = "OTP has expired. Please request a new one.";
@@ -152,13 +220,13 @@ namespace Prog7312POEST10071737.Views
                     {
                         _userService.CreateUser("", "", email);
                     }
-                    
+
                     var user = new Models.User("", "", email);
                     _userService.Login(user);
-                    
+
                     StatusMessage.Text = "Login successful!";
                     StatusMessage.Foreground = System.Windows.Media.Brushes.Green;
-                    
+
                     // Call the method to raise the event
                     OnLoginSuccessful();
                 }
@@ -173,11 +241,17 @@ namespace Prog7312POEST10071737.Views
                 StatusMessage.Text = "Invalid OTP. Please try again.";
             }
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Event handler for the Register button click event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
             var email = EmailTextBox.Text.Trim();
-            
+
             if (!IsValidEmail(email))
             {
                 StatusMessage.Text = "Please enter a valid email address";
@@ -187,7 +261,7 @@ namespace Prog7312POEST10071737.Views
             try
             {
                 _userService.CreateUser("", "", email);
-                
+
                 // Send welcome email
                 var subject = "Welcome to Our App";
                 var body = "Thank you for registering! You can now login using OTP.";
@@ -202,7 +276,12 @@ namespace Prog7312POEST10071737.Views
                 StatusMessage.Text = "Registration failed. Please try again.";
             }
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Generates a random OTP (One-Time Password).
+        /// </summary>
+        /// <returns>The generated OTP.</returns>
         private string GenerateOTP()
         {
             // Generate a 6-digit OTP
@@ -214,7 +293,13 @@ namespace Prog7312POEST10071737.Views
                 return (random % 1000000).ToString("D6");
             }
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Checks if the given email address is valid.
+        /// </summary>
+        /// <param name="email">The email address to validate.</param>
+        /// <returns>True if the email address is valid, otherwise false.</returns>
         private bool IsValidEmail(string email)
         {
             try
@@ -227,18 +312,34 @@ namespace Prog7312POEST10071737.Views
                 return false;
             }
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Raises the LoginSuccessful event.
+        /// </summary>
         private void OnLoginSuccessful()
         {
             LoginSuccessful?.Invoke(this, EventArgs.Empty);
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Event handler for the OTP text box text changed event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
         private void OtpTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             // Logic to handle OTP text change
             VerifyOtpButton.IsEnabled = !string.IsNullOrWhiteSpace(OtpTextBox.Text);
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Event handler for the Resend OTP button click event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
         private void ResendOtpButton_Click(object sender, RoutedEventArgs e)
         {
             // Logic to handle resending OTP
@@ -246,4 +347,4 @@ namespace Prog7312POEST10071737.Views
         }
     }
 }
-  
+//____________________________________EOF_________________________________________________________________________

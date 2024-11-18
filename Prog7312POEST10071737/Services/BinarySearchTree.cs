@@ -1,5 +1,5 @@
-﻿using System;
-using Prog7312POEST10071737.Models;
+﻿using Prog7312POEST10071737.Models;
+using System;
 
 namespace Prog7312POEST10071737.Services
 {
@@ -10,6 +10,7 @@ namespace Prog7312POEST10071737.Services
             public IssueReport Report { get; set; }
             public Node Left { get; set; }
             public Node Right { get; set; }
+            //___________________________________________________________________________________________________________
 
             public Node(IssueReport report)
             {
@@ -17,13 +18,16 @@ namespace Prog7312POEST10071737.Services
                 Left = Right = null;
             }
         }
+        //___________________________________________________________________________________________________________
 
         private Node root;
+        //___________________________________________________________________________________________________________
 
         public void Insert(IssueReport report)
         {
             root = InsertRec(root, report);
         }
+        //___________________________________________________________________________________________________________
 
         private Node InsertRec(Node root, IssueReport report)
         {
@@ -45,11 +49,13 @@ namespace Prog7312POEST10071737.Services
 
             return root;
         }
+        //___________________________________________________________________________________________________________
 
         public void InorderTraversal(Action<IssueReport> action)
         {
             InorderTraversalRec(root, action);
         }
+        //___________________________________________________________________________________________________________
 
         private void InorderTraversalRec(Node root, Action<IssueReport> action)
         {
@@ -62,3 +68,4 @@ namespace Prog7312POEST10071737.Services
         }
     }
 }
+//____________________________________EOF_________________________________________________________________________

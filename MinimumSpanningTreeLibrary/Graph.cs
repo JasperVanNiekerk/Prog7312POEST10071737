@@ -12,11 +12,13 @@ namespace MinimumSpanningTreeLibrary
             _vertices = vertices;
             _edges = new List<Edge>();
         }
+        //___________________________________________________________________________________________________________
 
         public void AddEdge(int source, int destination, int weight)
         {
             _edges.Add(new Edge(source, destination, weight));
         }
+        //___________________________________________________________________________________________________________
 
         private int Find(int[] parent, int i)
         {
@@ -26,6 +28,7 @@ namespace MinimumSpanningTreeLibrary
             }
             return parent[i];
         }
+        //___________________________________________________________________________________________________________
 
         private void Union(int[] parent, int[] rank, int x, int y)
         {
@@ -46,6 +49,7 @@ namespace MinimumSpanningTreeLibrary
                 rank[xRoot]++;
             }
         }
+        //___________________________________________________________________________________________________________
 
         public (List<Edge> mstEdges, int totalWeight) KruskalMST()
         {
@@ -88,3 +92,4 @@ namespace MinimumSpanningTreeLibrary
         }
     }
 }
+//____________________________________EOF_________________________________________________________________________

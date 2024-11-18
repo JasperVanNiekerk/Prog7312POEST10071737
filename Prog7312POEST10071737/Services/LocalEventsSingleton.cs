@@ -1,11 +1,11 @@
-﻿using Prog7312POEST10071737.Models;
+﻿using Prog7312POEST10071737.Core;
+using Prog7312POEST10071737.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Prog7312POEST10071737.Core;
 
 namespace Prog7312POEST10071737.Services
 {
@@ -16,10 +16,12 @@ namespace Prog7312POEST10071737.Services
     {
         private static LocalEventsSingleton instance = null;
         private static readonly object padlock = new object();
+        //___________________________________________________________________________________________________________
 
         private LocalEventsSingleton()
         {
         }
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Gets the instance of the LocalEventsSingleton class.
@@ -38,6 +40,7 @@ namespace Prog7312POEST10071737.Services
                 }
             }
         }
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Data structure to hold all the events.
@@ -60,7 +63,16 @@ namespace Prog7312POEST10071737.Services
                 OnPropertyChanged(nameof(Events));
             }
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Event handler for the CollectionChanged event of the Events collection.
+        /// Adds the categories of the new events to the set of unique categories,
+        /// adds the new events to the Events lookup table, and adds the new events
+        /// to the CategoryEventsLookup table.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void Events_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
@@ -73,6 +85,7 @@ namespace Prog7312POEST10071737.Services
                 }
             }
         }
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Priority queue for announcement events.
@@ -238,6 +251,7 @@ namespace Prog7312POEST10071737.Services
             }
             return null;
         }
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Gets the events that match the search string.
@@ -362,13 +376,17 @@ namespace Prog7312POEST10071737.Services
                 AnnouncementEventsQueue.Enqueue(ev, priorityThisMonth);
             }
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Populates the announcement queue with events.
+        /// </summary>
         public void PopulateAnnouncementQueue()
         {
             AnnouncementEventsQueue.Clear();
             var now = DateTime.Now;
             var events = Events?.ToList() ?? new List<OurEvents>();
-            
+
             if (events.Count == 0) return;
 
             // First pass: Add priority events
@@ -398,6 +416,7 @@ namespace Prog7312POEST10071737.Services
                 }
             }
         }
+        //___________________________________________________________________________________________________________
 
         public string FormatEventBannerText(OurEvents ev)
         {
@@ -405,14 +424,15 @@ namespace Prog7312POEST10071737.Services
             var timeStatus = GetEventTimeStatus(ev);
             return $"{ev.DisplayTitle} - {ev.Dates} {timeStatus}";
         }
+        //___________________________________________________________________________________________________________
 
         private string GetEventTimeStatus(OurEvents ev)
         {
             var now = DateTime.Now;
-            
+
             if (ev.StartDate <= now && ev.EndDate >= now)
                 return "(Happening Now)";
-            
+
             if (ev.StartDate > now)
             {
                 var daysUntil = (ev.StartDate - now).TotalDays;
@@ -423,9 +443,10 @@ namespace Prog7312POEST10071737.Services
                 if (daysUntil <= 30)
                     return "(This Month)";
             }
-            
+
             return "";
         }
+        //___________________________________________________________________________________________________________
 
         public int CalculateEventPriority(OurEvents ev)
         {
@@ -436,32 +457,35 @@ namespace Prog7312POEST10071737.Services
             // Currently running events get highest priority
             if (ev.StartDate <= now && ev.EndDate >= now)
                 return 1;
-            
+
             // Events starting within 24 hours
             if (daysUntilStart >= 0 && daysUntilStart <= 1)
                 return 2;
-            
+
             // Events starting within the week
             if (daysUntilStart > 1 && daysUntilStart <= 7)
                 return 3;
-            
+
             // Events starting within two weeks
             if (daysUntilStart > 7 && daysUntilStart <= 14)
                 return 4;
-            
+
             // Events starting within the month
             if (daysUntilStart > 14 && daysUntilStart <= 30)
                 return 5;
-            
+
             // Future events beyond a month
             if (daysUntilStart > 30)
                 return 6;
-            
+
             // Past events get lowest priority
             return 7;
         }
+        //___________________________________________________________________________________________________________
 
-        
+        /// <summary>
+        /// Refreshes the categories by clearing the unique categories set and populating it with the categories from the events.
+        /// </summary>
         public void RefreshCategories()
         {
             _uniqueCategories.Clear();
@@ -480,6 +504,7 @@ namespace Prog7312POEST10071737.Services
             }
             OnPropertyChanged(nameof(UniqueCategories));
         }
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Gets events filtered by category and date range.
@@ -492,15 +517,15 @@ namespace Prog7312POEST10071737.Services
         {
             // Start with all events
             var query = Events.AsEnumerable();
-            
+
             // Filter by category if specified
             if (!string.IsNullOrEmpty(category))
             {
-                query = query.Where(ev => 
-                    ev.Categories != null && 
+                query = query.Where(ev =>
+                    ev.Categories != null &&
                     ev.Categories.Contains(category, StringComparer.OrdinalIgnoreCase));
             }
-            
+
             // Filter by date range
             // An event is within range if:
             // 1. It starts within the range, OR
@@ -510,7 +535,7 @@ namespace Prog7312POEST10071737.Services
                 (ev.StartDate >= startDate && ev.StartDate <= endDate) ||  // Starts within range
                 (ev.EndDate >= startDate && ev.EndDate <= endDate) ||      // Ends within range
                 (ev.StartDate <= startDate && ev.EndDate >= endDate));     // Spans the range
-            
+
             return query.ToList();
         }
     }

@@ -11,6 +11,7 @@ namespace Prog7312POEST10071737.Services
             Red,
             Black
         }
+        //___________________________________________________________________________________________________________
 
         private class Node
         {
@@ -20,6 +21,7 @@ namespace Prog7312POEST10071737.Services
             public Node Left;
             public Node Right;
             public Node Parent;
+            //___________________________________________________________________________________________________________
 
             public Node(TKey key, TValue value)
             {
@@ -28,8 +30,10 @@ namespace Prog7312POEST10071737.Services
                 Color = Color.Red;
             }
         }
+        //___________________________________________________________________________________________________________
 
         private Node root;
+        //___________________________________________________________________________________________________________
 
         public void Insert(TKey key, TValue value)
         {
@@ -80,6 +84,7 @@ namespace Prog7312POEST10071737.Services
             // Fix Red-Black tree violations
             FixViolation(newNode);
         }
+        //___________________________________________________________________________________________________________
 
         private void FixViolation(Node node)
         {
@@ -160,6 +165,7 @@ namespace Prog7312POEST10071737.Services
 
             root.Color = Color.Black;
         }
+        //___________________________________________________________________________________________________________
 
         private void LeftRotate(Node x)
         {
@@ -184,6 +190,7 @@ namespace Prog7312POEST10071737.Services
             y.Left = x;
             x.Parent = y;
         }
+        //___________________________________________________________________________________________________________
 
         private void RightRotate(Node y)
         {
@@ -208,6 +215,7 @@ namespace Prog7312POEST10071737.Services
             x.Right = y;
             y.Parent = x;
         }
+        //___________________________________________________________________________________________________________
 
         public List<TValue> Search(TKey key)
         {
@@ -217,6 +225,7 @@ namespace Prog7312POEST10071737.Services
             Node node = Search(root, key);
             return node?.Values ?? new List<TValue>();
         }
+        //___________________________________________________________________________________________________________
 
         private Node Search(Node node, TKey key)
         {
@@ -228,6 +237,7 @@ namespace Prog7312POEST10071737.Services
             else
                 return Search(node.Right, key);
         }
+        //___________________________________________________________________________________________________________
 
         // Helper method to check if tree is empty
         public bool IsEmpty()
@@ -236,3 +246,4 @@ namespace Prog7312POEST10071737.Services
         }
     }
 }
+//____________________________________EOF_________________________________________________________________________

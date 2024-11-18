@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Prog7312POEST10071737.Services
 {
@@ -10,12 +6,14 @@ namespace Prog7312POEST10071737.Services
     {
         private Dictionary<string, GraphNode> nodes;
         private List<(string Source, string Target)> edges;
+        //___________________________________________________________________________________________________________
 
         public Graph()
         {
             nodes = new Dictionary<string, GraphNode>();
             edges = new List<(string Source, string Target)>();
         }
+        //___________________________________________________________________________________________________________
 
         public void AddNode(string id, string label, NodeType type, object data)
         {
@@ -24,6 +22,7 @@ namespace Prog7312POEST10071737.Services
                 nodes[id] = new GraphNode(id, label, type, data);
             }
         }
+        //___________________________________________________________________________________________________________
 
         public void AddEdge(string sourceId, string targetId)
         {
@@ -34,10 +33,12 @@ namespace Prog7312POEST10071737.Services
                 nodes[targetId].Neighbors.Add(nodes[sourceId]);
             }
         }
+        //___________________________________________________________________________________________________________
 
         public IEnumerable<GraphNode> GetNodes() => nodes.Values;
         public IEnumerable<(string Source, string Target)> GetEdges() => edges;
     }
+    //___________________________________________________________________________________________________________
 
     public class GraphNode
     {
@@ -56,6 +57,7 @@ namespace Prog7312POEST10071737.Services
             Neighbors = new List<GraphNode>();
         }
     }
+    //___________________________________________________________________________________________________________
 
     public enum NodeType
     {
@@ -63,3 +65,4 @@ namespace Prog7312POEST10071737.Services
         IssueReport
     }
 }
+//____________________________________EOF_________________________________________________________________________

@@ -1,2 +1,293 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Prog7312POEST10071737.App" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEQAAAEAACAIAAAAABAAAkAAAAAEAAAABSAAAQAAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Prog7312POEST10071737.Components.EventDisplayComponent" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAgAAAAAAAAAAAAAAEAAAAABAAAAAQQAAAAAAA=</HashCode>
+      <FileName>Components\EventDisplayComponent.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Prog7312POEST10071737.Components.ReportDisplayComponent" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQEEAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\ReportDisplayComponent.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Prog7312POEST10071737.Core.ObservableObject">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAIAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\ObservableObjects.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Prog7312POEST10071737.Core.RelayCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEACAAQAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\RelayCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Prog7312POEST10071737.Models.Category" Collapsed="true">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAgAEAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Catagory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Models.FilterModel" Collapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAgIAAAAAgAAAAAAAAAAAAAEAAABA=</HashCode>
+      <FileName>Models\FilterModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Models.IssueReport" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEACICgEAAAgBAAMIAJAEAAAgQAGAAAAACAEABAACAA=</HashCode>
+      <FileName>Models\IssueReport.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Prog7312POEST10071737.Models.OurEvents" Collapsed="true">
+    <Position X="14" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAIAgAEAAAAAAAAAgEAAIEBAAAAAAIEACAAA=</HashCode>
+      <FileName>Models\OurEvents.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Models.UploadedFile" Collapsed="true">
+    <Position X="10.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAABAAAA=</HashCode>
+      <FileName>Models\UploadedFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Models.User" Collapsed="true">
+    <Position X="12.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACIAAAAAgABAAABEAAAAAAAAAAAAAggAAAgA=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Properties.Resources" Collapsed="true">
+    <Position X="14" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAABEAAAAQAAAEAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Properties.Settings" Collapsed="true">
+    <Position X="8.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Services.AVLTree&lt;TKey, TValue&gt;" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAgAABIAAAAAAIAAIAAAAAgAAA=</HashCode>
+      <FileName>Services\AVLTree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Services.BinarySearchTree" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAgAIACAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Services\BinarySearchTree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Services.Graph" Collapsed="true">
+    <Position X="7" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAIAAAAAACAAgAAAAAAAAAAAAAAAAAAAIIAA=</HashCode>
+      <FileName>Services\Graph.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Services.GraphNode" Collapsed="true">
+    <Position X="8.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAEAAAAAAAAAAAAAAAAAAAABAAIQAAAAAAAAA=</HashCode>
+      <FileName>Services\Graph.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Services.LocalEventsSingleton">
+    <Position X="4.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAIAgAUAKmAAgAACIIyAKAIAgBAABgGQAAACQIABkA=</HashCode>
+      <FileName>Services\LocalEventsSingleton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Services.MaxHeap&lt;T&gt;" Collapsed="true">
+    <Position X="8.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEgAAAAAAAAAACAAAAQAAQABAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Services\MaxHeap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Services.MyEmailService" Collapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAAIA=</HashCode>
+      <FileName>Services\MyEmailService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Services.MyPriorityQueue&lt;T&gt;" Collapsed="true">
+    <Position X="12.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAEAAAAAAAABAAAAAAAAQAAEAABAAAAAAAAABAAAA=</HashCode>
+      <FileName>Services\MyPriorityQueue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Services.RedBlackTree&lt;TKey, TValue&gt;" Collapsed="true">
+    <Position X="15.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAMAAAAAAAAAAAAAgAAAIAAAAAAAAAIAAAAAgAAA=</HashCode>
+      <FileName>Services\RedBlackTree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Services.ScraperService" Collapsed="true">
+    <Position X="15.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIABAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Services\ScraperService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Services.UserSingleton" Collapsed="true">
+    <Position X="14" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAIACYAAAQQQAAAAAAKAAABCAAIAQAASAAAAAAA=</HashCode>
+      <FileName>Services\UserSingleton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Prog7312POEST10071737.Views.EventView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIABAAgAAAAAAIAAIAAAAAAAAAAABAACAYQAABAEAA=</HashCode>
+      <FileName>Views\EventView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Prog7312POEST10071737.Views.LocalEventsView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AmBAAkRAACAzEAJAAAIAAAcEBAAYcAAAEAEAAIAAAwA=</HashCode>
+      <FileName>Views\LocalEventsView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Prog7312POEST10071737.Views.EventComparer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\LocalEventsView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Prog7312POEST10071737.Views.LoginRegisterView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIgAAAAAAIAAAggFEACAhwAAAAAEAABABEAAAAYAA=</HashCode>
+      <FileName>Views\LoginRegisterView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Prog7312POEST10071737.Views.ReportFormView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEEBABgAAAAIAAAAAACUBAAAAgACAAIAAAAAAA=</HashCode>
+      <FileName>Views\ReportFormView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Prog7312POEST10071737.Views.ReportViewsView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\ReportViewsView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Prog7312POEST10071737.Views.ServiceRequestStatusView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgBAAEAAAAAAAAAAAEAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Views\ServiceRequestStatusView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Prog7312POEST10071737.Views.TreeDataStructureViews.AVLandRedBlackTree" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEABAgQAAAAAQAAFAAAAABAABAAAAAAUAAAAQAAAAA=</HashCode>
+      <FileName>Views\TreeDataStructureViews\AVLandRedBlackTree.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Prog7312POEST10071737.Views.TreeDataStructureViews.BasicTree" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAIAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Views\TreeDataStructureViews\BasicTree.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Prog7312POEST10071737.Views.TreeDataStructureViews.BinaryTree" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAgAAAAAAAAAEAAAAAAAAAAAAAAAEAAAACAAAAA=</HashCode>
+      <FileName>Views\TreeDataStructureViews\BinaryTree.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Prog7312POEST10071737.Views.TreeDataStructureViews.Graph" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAiCABACAigAAAAAAAAAAAEAAAIAAgAAAAAgAAA=</HashCode>
+      <FileName>Views\TreeDataStructureViews\Graph.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Prog7312POEST10071737.Views.TreeDataStructureViews.Heap" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAgAAAAAAAAAACAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Views\TreeDataStructureViews\Heap.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Enum Name="Prog7312POEST10071737.Models.ReportStatus">
+    <Position X="8.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAIBCAAAA=</HashCode>
+      <FileName>Models\IssueReport.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Prog7312POEST10071737.Services.NodeType">
+    <Position X="7" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Services\Graph.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

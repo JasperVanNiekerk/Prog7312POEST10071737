@@ -1,42 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Prog7312POEST10071737.Models;
+﻿using Prog7312POEST10071737.Models;
 using Prog7312POEST10071737.Services;
+using System.Windows.Controls;
 
 namespace Prog7312POEST10071737.Views.TreeDataStructureViews
 {
     /// <summary>
-    /// Interaction logic for BinaryTree.xaml
+    /// Represents a binary tree view control.
     /// </summary>
     public partial class BinaryTree : UserControl
     {
         private readonly UserSingleton _userSingleton;
         private readonly BinarySearchTree _binaryTree;
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BinaryTree"/> class.
+        /// </summary>
         public BinaryTree()
         {
             InitializeComponent();
             _userSingleton = UserSingleton.Instance;
             _binaryTree = new BinarySearchTree();
-            
+
             // Subscribe to collection changes
             _userSingleton.IssueReports.CollectionChanged += IssueReports_CollectionChanged;
-            
+
             LoadReports();
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Loads the issue reports into the binary tree and displays them in the TreeView.
+        /// </summary>
         private void LoadReports()
         {
             IssueReportsTreeView.Items.Clear();
@@ -48,12 +43,19 @@ namespace Prog7312POEST10071737.Views.TreeDataStructureViews
             }
 
             // Display reports in TreeView in alphabetical order
-            _binaryTree.InorderTraversal(report => {
+            _binaryTree.InorderTraversal(report =>
+            {
                 var reportItem = CreateReportTreeViewItem(report);
                 IssueReportsTreeView.Items.Add(reportItem);
             });
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Creates a TreeViewItem for the given issue report.
+        /// </summary>
+        /// <param name="report">The issue report.</param>
+        /// <returns>The TreeViewItem representing the issue report.</returns>
         private TreeViewItem CreateReportTreeViewItem(IssueReport report)
         {
             var reportItem = new TreeViewItem
@@ -109,10 +111,17 @@ namespace Prog7312POEST10071737.Views.TreeDataStructureViews
 
             return reportItem;
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Event handler for the collection changed event of the IssueReports collection.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void IssueReports_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             LoadReports();
         }
     }
 }
+//____________________________________EOF_________________________________________________________________________

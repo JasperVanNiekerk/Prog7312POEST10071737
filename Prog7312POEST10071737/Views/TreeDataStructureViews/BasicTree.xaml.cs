@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Prog7312POEST10071737.Services;
+using System;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Prog7312POEST10071737.Models;
-using Prog7312POEST10071737.Services;
 
 namespace Prog7312POEST10071737.Views.TreeDataStructureViews
 {
@@ -15,7 +13,11 @@ namespace Prog7312POEST10071737.Views.TreeDataStructureViews
     public partial class BasicTree : UserControl
     {
         private UserSingleton _userSingleton;
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BasicTree"/> class.
+        /// </summary>
         public BasicTree()
         {
             InitializeComponent();
@@ -24,7 +26,11 @@ namespace Prog7312POEST10071737.Views.TreeDataStructureViews
             // Subscribe to collection changed because IssueReports can be modified at runtime
             _userSingleton.IssueReports.CollectionChanged += IssueReports_CollectionChanged;
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Loads the issue reports into the TreeView.
+        /// </summary>
         private void LoadIssueReports()
         {
             IssueReportsTreeView.Items.Clear();
@@ -92,7 +98,7 @@ namespace Prog7312POEST10071737.Views.TreeDataStructureViews
                         };
 
                         fileItem.ToolTip = "Double click to open file.";
-                        
+
                         fileItem.MouseDoubleClick += (s, e) =>
                         {
                             try
@@ -168,7 +174,13 @@ namespace Prog7312POEST10071737.Views.TreeDataStructureViews
                 IssueReportsTreeView.Items.Add(reportItem);
             }
         }
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Event handler for the collection changed event of the IssueReports collection.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">The event arguments.</param>
         private void IssueReports_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             // Reload the TreeView when the IssueReports collection changes
@@ -176,3 +188,4 @@ namespace Prog7312POEST10071737.Views.TreeDataStructureViews
         }
     }
 }
+//____________________________________EOF_________________________________________________________________________

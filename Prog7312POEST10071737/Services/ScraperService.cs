@@ -2,10 +2,8 @@
 using Prog7312POEST10071737.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace Prog7312POEST10071737.Services
 {
@@ -56,7 +54,7 @@ namespace Prog7312POEST10071737.Services
 
             return eventLinks;
         }
-//___________________________________________________________________________________________________________
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Scrapes the event details from the specified event URL.
@@ -142,7 +140,7 @@ namespace Prog7312POEST10071737.Services
                 return new OurEvents(title, description, date, venue, phone, images, categories);
             }
         }
-//___________________________________________________________________________________________________________
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Scrapes the events asynchronously and invokes the specified action for each scraped event.

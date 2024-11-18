@@ -82,10 +82,13 @@ namespace Prog7312POEST10071737.Views
                 }
 
                 ReportConfirmation();
+                UploadedFiles.Clear();
                 LocationTB.Text = "";
                 CatagoryCB.Text = "";
                 DescriptionTB.Document.Blocks.Clear();
                 ImageDisplayIMG.Source = null;
+                SubscribeCB.IsChecked = false;
+                ReportConfirmationCB.IsChecked = false;
                 MessageBox.Show("Issue Submitted", "Success Message", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 

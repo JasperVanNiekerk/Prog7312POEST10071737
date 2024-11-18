@@ -121,9 +121,18 @@ namespace Prog7312POEST10071737.Services
         }
         //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Gets a value indicating whether a user is currently logged in.
+        /// </summary>
         public bool IsLoggedIn => CurrentUser != null;
+        //___________________________________________________________________________________________________________
 
+        /// <summary>
+        /// Event that is raised when the login state changes.
+        /// </summary>
         public event EventHandler LoginStateChanged;
+
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Creates a new user and sets it as the current user
@@ -145,6 +154,7 @@ namespace Prog7312POEST10071737.Services
                 return false;
             }
         }
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Logs in a user
@@ -155,6 +165,7 @@ namespace Prog7312POEST10071737.Services
             CurrentUser = user;
             LoginStateChanged?.Invoke(this, EventArgs.Empty);
         }
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Logs out the current user
@@ -164,6 +175,7 @@ namespace Prog7312POEST10071737.Services
             CurrentUser = null;
             LoginStateChanged?.Invoke(this, EventArgs.Empty);
         }
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Gets the email of the current user

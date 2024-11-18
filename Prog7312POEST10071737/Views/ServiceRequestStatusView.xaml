@@ -133,28 +133,6 @@
                 FontWeight="DemiBold"
                 ToolTip="Uses Graph data structure to display sertvice request" />
 
-
-            <Border Height="10" />
-            <Line
-                Stroke="Black"
-                StrokeThickness="1"
-                X1="0"
-                X2="{Binding ActualWidth, ElementName=treeSP}"
-                Y1="0"
-                Y2="0" />
-            <Border Height="5" />
-
-            <Button
-                x:Name="MSTBTN"
-                MinHeight="30"
-                HorizontalAlignment="Stretch"
-                Background="LightGray"
-                Click="MSTBTN_Click"
-                Content="MST"
-                FontSize="12"
-                FontWeight="DemiBold"
-                ToolTip="Uses MST data structure to display sertvice request" />
-
         </StackPanel>
 
         <ContentControl

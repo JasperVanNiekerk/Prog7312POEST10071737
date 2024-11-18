@@ -13,6 +13,7 @@ namespace Prog7312POEST10071737.Services
             public Node Left;
             public Node Right;
             public int Height;
+            //___________________________________________________________________________________________________________
 
             public Node(TKey key, TValue value)
             {
@@ -21,13 +22,16 @@ namespace Prog7312POEST10071737.Services
                 Height = 1;
             }
         }
+        //___________________________________________________________________________________________________________
 
         private Node root;
+        //___________________________________________________________________________________________________________
 
         public void Insert(TKey key, TValue value)
         {
             root = Insert(root, key, value);
         }
+        //___________________________________________________________________________________________________________
 
         private Node Insert(Node node, TKey key, TValue value)
         {
@@ -70,12 +74,14 @@ namespace Prog7312POEST10071737.Services
 
             return node;
         }
+        //___________________________________________________________________________________________________________
 
         public List<TValue> Search(TKey key)
         {
             Node node = Search(root, key);
             return node != null ? node.Values : null;
         }
+        //___________________________________________________________________________________________________________
 
         private Node Search(Node node, TKey key)
         {
@@ -90,11 +96,13 @@ namespace Prog7312POEST10071737.Services
             else
                 return node;
         }
+        //___________________________________________________________________________________________________________
 
         private int GetHeight(Node node)
         {
             return node?.Height ?? 0;
         }
+        //___________________________________________________________________________________________________________
 
         private int GetBalance(Node node)
         {
@@ -102,6 +110,7 @@ namespace Prog7312POEST10071737.Services
                 return 0;
             return GetHeight(node.Left) - GetHeight(node.Right);
         }
+        //___________________________________________________________________________________________________________
 
         private Node RightRotate(Node y)
         {
@@ -119,6 +128,7 @@ namespace Prog7312POEST10071737.Services
             // Return new root
             return x;
         }
+        //___________________________________________________________________________________________________________
 
         private Node LeftRotate(Node x)
         {
@@ -138,3 +148,4 @@ namespace Prog7312POEST10071737.Services
         }
     }
 }
+//____________________________________EOF_________________________________________________________________________

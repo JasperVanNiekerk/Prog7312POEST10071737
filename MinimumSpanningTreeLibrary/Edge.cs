@@ -7,6 +7,7 @@ namespace MinimumSpanningTreeLibrary
         public int Source { get; set; }
         public int Destination { get; set; }
         public int Weight { get; set; }
+        //___________________________________________________________________________________________________________
 
         public Edge(int source, int destination, int weight)
         {
@@ -14,6 +15,7 @@ namespace MinimumSpanningTreeLibrary
             Destination = destination;
             Weight = weight;
         }
+        //___________________________________________________________________________________________________________
 
         public int CompareTo(Edge other)
         {
@@ -21,3 +23,4 @@ namespace MinimumSpanningTreeLibrary
         }
     }
 }
+//____________________________________EOF_________________________________________________________________________

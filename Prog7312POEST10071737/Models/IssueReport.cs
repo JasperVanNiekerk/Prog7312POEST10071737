@@ -15,6 +15,7 @@ namespace Prog7312POEST10071737.Models
         Resolved,
         Closed
     }
+    //___________________________________________________________________________________________________________
 
     public class IssueReport : INotifyPropertyChanged
     {
@@ -113,6 +114,8 @@ namespace Prog7312POEST10071737.Models
             get => _subscribedUsers;
             set => SetField(ref _subscribedUsers, value);
         }
+        //___________________________________________________________________________________________________________
+
         /// <summary>
         /// Gets or sets the date and time when the issue report was created.
         /// </summary>
@@ -131,6 +134,7 @@ namespace Prog7312POEST10071737.Models
             MediaPaths = new List<UploadedFile>();
             SubscribedUsers = new List<Guid>();
         }
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Constructor for the issue report.
@@ -157,6 +161,7 @@ namespace Prog7312POEST10071737.Models
         {
             SubscribedUsers.Add(user);
         }
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Subscribes a user to the issue report.
@@ -169,6 +174,7 @@ namespace Prog7312POEST10071737.Models
                 OnPropertyChanged(nameof(SubscribedUsers));
             }
         }
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Updates the status of the issue report.
@@ -177,6 +183,7 @@ namespace Prog7312POEST10071737.Models
         {
             Status = status;
         }
+        //___________________________________________________________________________________________________________
 
         /// <summary>
         /// Raises the property changed event.
