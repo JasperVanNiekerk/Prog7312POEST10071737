@@ -48,7 +48,7 @@ namespace Prog7312POEST10071737.Views
 
         private void GraphBTN_Click(object sender, RoutedEventArgs e)
         {
-
+            TreeCC.Content = new TreeDataStructureViews.Graph();
         }
 
         private void MSTBTN_Click(object sender, RoutedEventArgs e)

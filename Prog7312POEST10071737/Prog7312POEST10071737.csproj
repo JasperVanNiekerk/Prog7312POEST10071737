@@ -74,6 +74,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\AVLTree.cs" />
     <Compile Include="Services\BinarySearchTree.cs" />
+    <Compile Include="Services\Graph.cs" />
     <Compile Include="Services\LocalEventsSingleton.cs" />
     <Compile Include="Services\MaxHeap.cs" />
     <Compile Include="Services\MyEmailService.cs" />
@@ -107,6 +108,9 @@
     </Compile>
     <Compile Include="Views\TreeDataStructureViews\BinaryTree.xaml.cs">
       <DependentUpon>BinaryTree.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TreeDataStructureViews\Graph.xaml.cs">
+      <DependentUpon>Graph.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TreeDataStructureViews\Heap.xaml.cs">
       <DependentUpon>Heap.xaml</DependentUpon>
@@ -183,6 +187,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\TreeDataStructureViews\Graph.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TreeDataStructureViews\Heap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -206,6 +214,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="MyClassDiagram.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -243,6 +252,9 @@
     </PackageReference>
     <PackageReference Include="ModernWpfUI">
       <Version>0.9.6</Version>
+    </PackageReference>
+    <PackageReference Include="QuickGraph">
+      <Version>3.6.61119.7</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

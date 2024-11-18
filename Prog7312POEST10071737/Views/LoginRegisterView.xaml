@@ -42,18 +42,25 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <TextBox
                     x:Name="OtpTextBox"
+                    Grid.Row="0"
                     ui:ControlHelper.PlaceholderText="Enter OTP"
-                    Margin="0,10"
-                    TextChanged="OtpTextBox_TextChanged"/>
+                    Margin="0,10"/>
 
-                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock x:Name="OtpTimerText" 
-                             Text="OTP expires in: 5:00"
-                             Margin="0,5,10,5"/>
+                <StackPanel 
+                    Grid.Row="1" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center"
+                    Margin="0,5">
+                    <TextBlock 
+                        x:Name="OtpTimerText" 
+                        Text="OTP expires in: 5:00"
+                        VerticalAlignment="Center"
+                        Margin="0,0,10,0"/>
                     <Button
                         x:Name="ResendOtpButton"
                         Content="Resend"
